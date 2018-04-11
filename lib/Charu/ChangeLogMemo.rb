@@ -58,7 +58,6 @@ module Charu
       @item_source_contents = item_source[1]  # 内容データ
 
       if @item_source_contents == nil then
-
         @item_source_contents == ""
       end
     end
@@ -151,8 +150,8 @@ module Charu
   end
 
   class ChangeLog
+    attr_accessor :entrys
     def initialize(entry_source)
-      @logger = Logger.new('./temp/ChangeLog.log', 5, 1024 * 10)
 
       entry_sources_split = entry_source.split(/(^\d\d\d\d-\d\d-\d\d)\s.*?\n/m)
 
@@ -176,10 +175,6 @@ module Charu
       end
     end
 
-    def get_entrys()
-      return @entrys
-    end
-
     def get_category_list()
       p "リスト".encode(Encoding::SJIS)
       category_list = []
@@ -198,11 +193,28 @@ module Charu
     end
   end
 
+  class ChangeLogPrivate < ChangeLog
+
+  end
+
+  class ChangeLogPublic < ChangeLog
+
+  end
+
   class ChangeLogMemo
+    attr_accessor :file_name
+    def initialize(file_name)
+      @file_name = file_name
 
-    def initialize()
-      @db_file_name = ARGV[0]
+      # ChangeLogMemoファイル
+      File.open(@file_name, 'r:utf-8'){|f|
+        @source = f.read  # 全て読み込む
+      }
 
+      change_log_private = ChangeLogPrivate.new(@source)
+      change_log_private.entrys.each{|date|
+        p date.get_entry_time()
+      }
     end
   end
 end
