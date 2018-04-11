@@ -43,7 +43,6 @@ module Charu
 
     def get_item_category()
       if @cotegory == nil then
-        p "カテゴリーがnil"
         return []
       end
       return @cotegory
