@@ -192,19 +192,45 @@ module Charu
         @source = f.read  # 全て読み込む
       }
 
-      change_log_private = ChangeLogPrivate.new(@source)
+      @change_log_private = ChangeLogPrivate.new(@source)
 
-      change_log_private.entrys.each{|date|
+=begin
+      @change_log_private.entrys.each{|date|
         date.get_items().each{|item|
           p "======="
           p date.get_items().size
           p item.datetime
           p item.get_item_title().encode(Encoding::SJIS)
           p item.get_item_log().encode(Encoding::SJIS)
-          p item
+          #p item
         }
-
       }
+=end
+    end
+
+    def get_item_sort()
+      @change_log_private.entrys.each{|date|
+        date.get_items().each{|item|
+          i = []
+          i << item
+
+          i.sort{|a, b| a.datetime <=> b.datetime }
+        }
+      }
+      return i
+    end
+
+
+    def get_item_sort_reverse()
+      @change_log_private.entrys.each{|date|
+        date.get_items().each{|item|
+          i = []
+          i << item
+
+          i.sort{|a, b| b.datetime <=> a.datetime }
+        }
+      }
+      return i
     end
   end
 end
