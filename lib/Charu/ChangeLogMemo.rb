@@ -4,7 +4,6 @@ module Charu
   class Item
     attr_accessor :datetime, :item_title, :item_log, :cotegory
     def initialize(time, title)
-      log = ""
       if time == nil then
         p "アイテム初期化失敗"
         time = Time.now
@@ -14,7 +13,7 @@ module Charu
       @datetime = time
 
       @item_title = title
-      @item_log = log
+      @item_log = ""
 
       @cotegory = []
       # カテゴリー
@@ -69,20 +68,22 @@ module Charu
     def get_items() # 解析する
 
       @items = []
-      for i in 0..3 do
-
-        @item_source_contents.split("\n").each{|line|
-          if line =~ /^\*\s.*?\n/m or line =~ /^\t\*\s.*?\n/m or @item == nil then
-            @item = Item.new(@item_source_day, line)
-          else
-            if line == nil then
-              line = ""
-            end
-            @item.app(line)
+      item = nil
+      # 一行づつ処理する
+      @item_source_contents.split("\n").each{|line|
+        if item == nil then
+          item = Item.new(@item_source_day, line)
+        end
+        if line.match(/^\*\s.*?/) != nil or line.match(/^\t\*\s.*?/) != nil then
+          @items << item
+          item = Item.new(@item_source_day, line)
+        else
+          if line == nil then
+            line = ""
           end
-        }
-        @items << @item
-      end
+          item.app(line)
+        end
+      }
 
       # 日付で分ける
 
@@ -193,10 +194,11 @@ module Charu
         p date.get_entry_time()
         date.get_items().each{|item|
           p "======="
-          p item.datetime
-          p item.get_item_title().encode(Encoding::SJIS)
-          p item.get_item_log().encode(Encoding::SJIS)
 
+          #p item.datetime
+          #p item.get_item_title().encode(Encoding::SJIS)
+          #p item.get_item_log().encode(Encoding::SJIS)
+          p item
         }
 
       }
