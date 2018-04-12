@@ -66,20 +66,19 @@ module Charu
       end
     end
 
-    def get_item_contents() # 解析する
-      @item_contents = []
+    def get_items() # 解析する
 
       @items = []
       @item_source_contents.split("\n").each{|line|
         if line =~ /^\*\s.*?\n/m or line =~ /^\t\*\s.*?\n/m or @item == nil then
-          @item = Item.new(@item_source_day, line)
+          item = Item.new(@item_source_day, line)
         else
           if line == nil then
             line = ""
           end
-          @item.app(line)
         end
-        @items << @item
+        item.app(line)
+        @items << item
       }
 
       # 日付で分ける
@@ -108,29 +107,6 @@ module Charu
           end
         }
 =end
-
-      return @item_contents
-    end
-
-    def get_items()
-
-      # item_contents = 日付で分けたデータ
-      # item_content = １日分
-      # item_content = １日分をアイテムに分けたデーター
-      @items = []
-      self.get_item_contents().each{|item_title, item_content|
-        items1 = []
-        if item_title != nil or item_title != "" then
-          #p @item_source_day + i.encode(Encoding::SJIS)
-          if item_content == nil then
-            item_content = ""
-          end
-
-          item = Item.new(get_entry_time(), item_title, item_content)
-          item.app(line)
-
-        end
-      }
 
       return @items
     end
@@ -212,8 +188,14 @@ module Charu
 
       change_log_private.entrys.each{|date|
         p date.get_entry_time()
-        #p date.get_items()
-        p date.item_contents()
+        date.get_items().each{|item|
+          p "======="
+          p item.datetime
+          p item.get_item_title().encode(Encoding::SJIS)
+          p item.get_item_log().encode(Encoding::SJIS)
+
+        }
+
       }
     end
   end
