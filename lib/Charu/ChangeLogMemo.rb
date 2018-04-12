@@ -69,17 +69,20 @@ module Charu
     def get_items() # 解析する
 
       @items = []
-      @item_source_contents.split("\n").each{|line|
-        if line =~ /^\*\s.*?\n/m or line =~ /^\t\*\s.*?\n/m or @item == nil then
-          item = Item.new(@item_source_day, line)
-        else
-          if line == nil then
-            line = ""
+      for i in 0..3 do
+
+        @item_source_contents.split("\n").each{|line|
+          if line =~ /^\*\s.*?\n/m or line =~ /^\t\*\s.*?\n/m or @item == nil then
+            @item = Item.new(@item_source_day, line)
+          else
+            if line == nil then
+              line = ""
+            end
+            @item.app(line)
           end
-        end
-        item.app(line)
-        @items << item
-      }
+        }
+        @items << @item
+      end
 
       # 日付で分ける
 
