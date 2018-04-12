@@ -41,6 +41,10 @@ module Charu
       return ""
     end
 
+    def app(line)
+      @item_log = @item_log + "\n" + line
+    end
+
     def get_item_category()
       if @cotegory == nil then
         return []
@@ -62,27 +66,20 @@ module Charu
       end
     end
 
-    def get_item_contents()
+    def get_item_contents() # 解析する
       @item_contents = []
-      @item_source_contents.gsub(/^(\*\s.*?)\n(.*)/m){|i|
-        if i == "" then
-        elsif i == "\n" then
-        else
-          @item_contents << [$1, $2]
-        end
-      }
 
-      items = []
+      @items = []
       @item_source_contents.split("\n").each{|line|
-        if line =~ /^\*\s.*?\n/ or line =~ /^\t\*\s.*?\n/ then
-          if item == !il then
-            items << item
-            item = Item.new(@item_source_day, line)
-            p line
-          else
-            item.app(line)
+        if line =~ /^\*\s.*?\n/m or line =~ /^\t\*\s.*?\n/m or @item == nil then
+          @item = Item.new(@item_source_day, line)
+        else
+          if line == nil then
+            line = ""
           end
+          @item.app(line)
         end
+        @items << @item
       }
 
       # 日付で分ける
@@ -121,7 +118,7 @@ module Charu
       # item_content = １日分
       # item_content = １日分をアイテムに分けたデーター
       @items = []
-      get_item_contents().each{|item_title, item_content|
+      self.get_item_contents().each{|item_title, item_content|
         items1 = []
         if item_title != nil or item_title != "" then
           #p @item_source_day + i.encode(Encoding::SJIS)
@@ -130,7 +127,7 @@ module Charu
           end
 
           item = Item.new(get_entry_time(), item_title, item_content)
-          @items << item
+          item.app(line)
 
         end
       }
@@ -212,8 +209,11 @@ module Charu
       }
 
       change_log_private = ChangeLogPrivate.new(@source)
+
       change_log_private.entrys.each{|date|
         p date.get_entry_time()
+        #p date.get_items()
+        p date.item_contents()
       }
     end
   end
