@@ -214,7 +214,7 @@ module Charu
           i = []
           i << item
 
-          i.sort{|a, b| a.datetime <=> b.datetime }
+          i.sort!{|a, b| a.datetime <=> b.datetime }
         }
       }
       return i
@@ -227,7 +227,7 @@ module Charu
           i = []
           i << item
 
-          i.sort{|a, b| b.datetime <=> a.datetime }
+          i.sort!{|a, b| b.datetime <=> a.datetime }
         }
       }
       return i
