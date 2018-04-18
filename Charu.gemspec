@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{ChangeLogMemo Html Converter Liblary}
   spec.description   = %q{ChangeLogMemo Html Liblary}
-  spec.homepage      = ""
+  spec.homepage      = "https://rubygems.org/"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
