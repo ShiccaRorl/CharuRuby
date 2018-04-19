@@ -209,9 +209,9 @@ module Charu
     end
 
     def get_item_sort()
+      i = []
       @change_log_private.entrys.each{|date|
         date.get_items().each{|item|
-          i = []
           i << item
 
           i.sort!{|a, b| a.datetime <=> b.datetime }
@@ -222,9 +222,9 @@ module Charu
 
 
     def get_item_sort_reverse()
+      i = []
       @change_log_private.entrys.each{|date|
         date.get_items().each{|item|
-          i = []
           i << item
 
           i.sort!{|a, b| b.datetime <=> a.datetime }
