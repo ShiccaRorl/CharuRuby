@@ -1,0 +1,17 @@
+
+<% i = 0 %>
+<% @daydata.each{|day| %>
+<% if i == 0 then %>
+<h1><%= day.get_Datetime().strftime("%Y年%m月%d日 (%A)") %></h1>
+<% i = 1 %>
+<% end %>
+<% } %>
+
+
+<% @daydata.each{|day| %>
+<h2><span class="title"><br>
+<%= day.get_tile() %></h2>
+</span></div>
+<div class="lm"><span class="lm"><%= day.get_Datetime.strftime("%H時%M分%S秒") %></span>
+<p><%= day.get_log() %></p>
+<% } %>
