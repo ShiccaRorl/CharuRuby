@@ -22,10 +22,24 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
-
+初期化
 ```
 changelogmemo = Charu::ChangeLogMemo.new(file_path)
+```
+
+アイテム取得
+```
+changelogmemo.get_item_sort
+```
+
+アイテム取得逆順
+```
+changelogmemo.get_item_sort_reverse()
+```
+
+カテゴリー取得
+```
+changelogmemo.get_category_list
 ```
 
 ## Development
