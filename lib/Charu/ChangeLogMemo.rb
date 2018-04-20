@@ -1,8 +1,34 @@
 # -*- encoding: utf-8 -*-
 
 module Charu
+  class Cotegory
+    def initialize(title)
+      if title == nil then
+        title = ""
+      end
+      @category = []
+      title.scan(/\[(.*?)\]:/).each{|i|
+        self.add(i)
+      }
+    end
+
+    def add(category)
+      if category == nil then
+        category = []
+      end
+      category.each{|i|
+        @category << i
+      }
+    end
+
+    def get_category_list()
+      @category.uniq! # 重複削除
+      return @category
+    end
+  end
+
   class Item
-    attr_accessor :datetime, :item_title, :item_log, :cotegory
+    attr_accessor :datetime, :item_title_source, :item_log, :cotegory
     def initialize(time)
       if time == nil then
         p "アイテム初期化失敗"
@@ -12,19 +38,18 @@ module Charu
 
       @datetime = time
 
-      @item_title = title
+      @item_title_source = title
       @item_log = ""
 
-      @cotegory = []
       # カテゴリー
     end
 
     def get_item_title()
-      if @item_title != nil then
-        @item_title.gsub!(/\*\s/, "") # タイトルから[＊]削除
-        @item_title.gsub!(/\[(.*?)\]:/, "") # タイトルからカテゴリ削除
+      if @item_title_source != nil then
+        i = @item_title_source.gsub(/\*\s/, "") # タイトルから[＊]削除
+        i = i.gsub(/\[(.*?)\]:/, "") # タイトルからカテゴリ削除
 
-        return @item_title
+        return i
       end
       return ""
     end
@@ -47,10 +72,11 @@ module Charu
     end
 
     def get_item_category()
+      @cotegory = Cotegory.new(@item_title_source)
       if @cotegory == nil then
         return []
       end
-      return @cotegory
+      return @cotegory.get_category_list()
     end
   end
 
@@ -79,7 +105,7 @@ module Charu
         if line.match(/^\*\s.*?/) != nil or line.match(/^\t\*\s.*?/) != nil then
           item = Item.new(@item_source_day)
           @items << item
-          item.item_title = line
+          item.item_title_source = line
         else
           if line == nil then
             line = ""
@@ -220,7 +246,6 @@ module Charu
       return i
     end
 
-
     def get_item_sort_reverse()
       i = []
       @change_log_private.entrys.each{|date|
@@ -231,6 +256,19 @@ module Charu
         }
       }
       return i
+    end
+
+    def get_category_list()
+      category_list = []
+      @change_log_private.entrys.each{|date|
+        date.get_items().each{|item|
+          item.get_item_category().each{|category|
+          category_list << category
+          }
+        }
+      }
+      category_list.uniq!
+      return category_list
     end
   end
 end
