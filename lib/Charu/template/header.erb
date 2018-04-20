@@ -7,10 +7,10 @@
   <meta http-equiv="Content-Script-Type" content="text/javascript">
   <meta http-equiv="Last-Modified" content="<%= Time.now().strftime("%a, %d %b %Y %H:%M:%S") %> GMT">
   <meta name="keywords" content="<%= @keyword %> ">
-  <meta name="description" content="変なの集めています。そして日常。">
+  <meta name="description" content="<%= @description %>">
   	<link rel="stylesheet" href="theme/base.css" type="text/css" media="all">
-	<link rel="stylesheet" href="<%= @css_theme_path %>" title="ニャンモナイトとその日暮らし" type="text/css" media="all">
-  <title>ニャンモナイトとその日暮らし</title>
+	<link rel="stylesheet" href="<%= @css_theme_path %>" title="<%= @title %>" type="text/css" media="all">
+  <title><%= @title %></title>
 
     <style type="text/css">
 
