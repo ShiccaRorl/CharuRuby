@@ -23,5 +23,5 @@ if nil != ARGV[0] then
     #p i.get_item_title.encode(Encoding::SJIS)
     #p i.get_item_category()
   }
-  changelogmemo.get_category_list()
+  #changelogmemo.get_category_list()
 end

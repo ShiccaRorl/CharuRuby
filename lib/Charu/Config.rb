@@ -1,32 +1,44 @@
 # -*- encoding: utf-8 -*-
 
+config = ""
+config = '
 module Charu
-class Config
-def initialize()
-# ホームページタイトル
-@home_title = "TestPage"
+  class Config
+    def initialize()
+      # ホームページタイトル
+      @home_title = "TestPage"
 
-# ホームページトップ
-@top_home_page = "http://hoge.com/hoge/"
+      # ホームページトップ
+      @top_home_page = "http://hoge.com/hoge/"
 
-# ホームページカテゴリー
-@home_category = ["Ruby", "Python", "Java"]
+      # ホームページカテゴリー
+      @home_category = ["Ruby", "Python", "Java"]
 
-# ホームページのdescription
-@home_description = "日々勉強中"
+      # ホームページのdescription
+      @home_description = "日々勉強中"
 
-# CSS Path
-@css_theme_path = "./css"
+      # CSS Path
+      @css_theme_path = "./css"
 
-# プライベートカテゴリー
-@Private_category = ["Private", "P", "★", "2ch"]
+      # プライベートカテゴリー
+      @Private_category = ["Private", "P", "★", "2ch"]
 
-# Change_Log_path
-@Change_Log_path = "./../Change_Log"
+      # Change_Log_path
+      @Change_Log_path = "./../Change_Log"
 
-# 一度に表示する記事数
-@article_size = 50
+      # 一度に表示する記事数
+      @article_size = 50
 
+    end
+  end
 end
+'
+
+if File.exist?("CharuConfig.rb") == false then
+  File.open("CharuConfig.rb", "w") do |f|
+    f.puts(config)
+  end
+else
+  require './CharuConfig'
 end
-end
+
