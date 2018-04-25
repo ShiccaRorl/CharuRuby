@@ -1,8 +1,0 @@
-
-<% @days.get_days().each{|day| %>
-<h2><span class="title">
-<a href="./index/<%= day.get_day_s() %>.html"><%= day.get_tile() %></a></span></h2>
-<div class="lm"><span class="lm">Last Update: <%= day.get_Datetime_s() %></span></div>
-<p><%= day.get_log() %></p>
-<% } %>
-
