@@ -7,6 +7,7 @@ Bundler.require
 
 require 'Charu/ChangeLogMemo'
 require 'Charu/Config'
+require 'Charu/Template'
 require 'Charu/CreateHtml'
 
 

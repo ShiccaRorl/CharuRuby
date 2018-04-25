@@ -71,40 +71,46 @@ footer = '
 </html>
 '
 
+
+
 # ディレクトリの確認
 if Dir.exist?("./CharuConfig/template") == false then
 # ディレクトリの作成
   Dir.mkdir('CharuConfig/template')
 end
 
+# header
 if File.exist?("./CharuConfig/template/header.erb") == false then
     File.open("./CharuConfig/template/header.erb", "w:utf-8") do |f|
-    f.puts(config)
+    f.puts(header)
   end
 else
-  require './CharuConfig/template/header.erb'
+  @header   = File.open("./CharuConfig/template/header.erb").read
 end
 
+# footer
 if File.exist?("./CharuConfig/template/footer.erb") == false then
     File.open("./CharuConfig/template/footer.erb", "w:utf-8") do |f|
-    f.puts(config)
+    f.puts(footer)
   end
 else
-  require './CharuConfig/template/footer.erb'
+  @footer   = File.open("./CharuConfig/template/footer.erb").read
 end
 
+# body
 if File.exist?("./CharuConfig/template/body.erb") == false then
     File.open("./CharuConfig/template/body.erb", "w:utf-8") do |f|
-    f.puts(config)
+    f.puts(body)
   end
 else
-  require './CharuConfig/template/body.erb'
+  @body     = File.open("./CharuConfig/template/body.erb").read
 end
 
+# day_body
 if File.exist?("./CharuConfig/template/day_body.erb") == false then
     File.open("./CharuConfig/template/day_body.erb", "w:utf-8") do |f|
-    f.puts(config)
+    f.puts(day_body)
   end
 else
-  require './CharuConfig/template/day_body.erb'
+  @day_body = File.open("./CharuConfig/template/day_body.erb").read
 end
