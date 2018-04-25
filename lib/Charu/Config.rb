@@ -45,11 +45,6 @@ if Dir.exist?("./CharuConfig") == false then
   Dir.mkdir('CharuConfig')
 end
 
-# ディレクトリの確認
-if Dir.exist?("./CharuConfig/template") == false then
-  Dir.mkdir('CharuConfig/template')
-end
-
 if File.exist?("./CharuConfig/CharuConfig.rb") == false then
   File.open("./CharuConfig/CharuConfig.rb", "w:utf-8") do |f|
     f.puts(config)

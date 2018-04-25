@@ -71,8 +71,40 @@ footer = '
 </html>
 '
 
+# ディレクトリの確認
+if Dir.exist?("./CharuConfig/template") == false then
+# ディレクトリの作成
+  Dir.mkdir('CharuConfig/template')
+end
 
+if File.exist?("./CharuConfig/template/header.erb") == false then
+    File.open("./CharuConfig/template/header.erb", "w:utf-8") do |f|
+    f.puts(config)
+  end
+else
+  require './CharuConfig/template/header.erb'
+end
 
+if File.exist?("./CharuConfig/template/footer.erb") == false then
+    File.open("./CharuConfig/template/footer.erb", "w:utf-8") do |f|
+    f.puts(config)
+  end
+else
+  require './CharuConfig/template/footer.erb'
+end
 
+if File.exist?("./CharuConfig/template/body.erb") == false then
+    File.open("./CharuConfig/template/body.erb", "w:utf-8") do |f|
+    f.puts(config)
+  end
+else
+  require './CharuConfig/template/body.erb'
+end
 
-
+if File.exist?("./CharuConfig/template/day_body.erb") == false then
+    File.open("./CharuConfig/template/day_body.erb", "w:utf-8") do |f|
+    f.puts(config)
+  end
+else
+  require './CharuConfig/template/day_body.erb'
+end
