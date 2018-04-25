@@ -4,6 +4,9 @@ config = ""
 config = '
 module Charu
   class Config
+    attr_accessor :home_title, :top_home_page, :home_category, :home_description, :css_theme_path, :Private_category
+	attr_accessor :Change_Log_path, :article_size, :www_html_out_path
+	attr_accessor :ftp_server, :ftp_port, :ftp_user, :ftp_pass
     def initialize()
       # ホームページタイトル
       @home_title = "TestPage"
@@ -24,7 +27,7 @@ module Charu
       @Private_category = ["Private", "P", "★", "2ch"]
 
       # Change_Log_path
-      @Change_Log_path = "./../Change_Log"
+      @Change_Log_path = "./../ChangeLog"
 
       # 一度に表示する記事数
       @article_size = 50
@@ -33,6 +36,11 @@ module Charu
       @www_html_out_path = "./www/"
 
       # FTPの設定
+      @ftp_server = ""
+      @ftp_port = "21"
+      @ftp_user = ""
+      @ftp_pass = ""
+
 
     end
   end

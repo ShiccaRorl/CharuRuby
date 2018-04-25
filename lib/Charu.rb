@@ -17,12 +17,11 @@ module Charu
 
 end
 
-if nil != ARGV[0] then
-  changelogmemo = Charu::ChangeLogMemo.new(ARGV[0])
+
+  changelogmemo = Charu::ChangeLogMemo.new()
   changelogmemo.get_item_sort_reverse().each{|i|
-    #p i.datetime
-    #p i.get_item_title.encode(Encoding::SJIS)
+    p i.datetime
+    p i.get_item_title.encode(Encoding::SJIS)
     #p i.get_item_category()
   }
   #changelogmemo.get_category_list()
-end

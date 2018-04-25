@@ -209,12 +209,13 @@ module Charu
   end
 
   class ChangeLogMemo
-    attr_accessor :file_name
-    def initialize(file_name)
-      @file_name = file_name
+    def initialize()
+      @config = Charu::Config.new()
 
+	  
+	  
       # ChangeLogMemoファイル
-      File.open(@file_name, 'r:utf-8'){|f|
+      File.open(@config.Change_Log_path, 'r:utf-8'){|f|
         @source = f.read  # 全て読み込む
       }
 
@@ -234,6 +235,12 @@ module Charu
 =end
     end
 
+	def article_size(item_list, cnt)
+	i = [0,@conf.article_size - 1]
+	
+	
+	end
+	
     def get_item_sort()
       i = []
       @change_log_private.entrys.each{|date|

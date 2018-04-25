@@ -24,23 +24,17 @@ Or install it yourself as:
 
 初期化
 ```
-changelogmemo = Charu::ChangeLogMemo.new(file_path)
+./CharuConfig/CharuConfig.rb
+```
+設定してください。
+
+
+テンプレート
+```
+./CharuConfig/template/
 ```
 
-アイテム取得
-```
-changelogmemo.get_item_sort
-```
 
-アイテム取得逆順
-```
-changelogmemo.get_item_sort_reverse()
-```
-
-カテゴリー取得
-```
-changelogmemo.get_category_list
-```
 
 ## Development
 
