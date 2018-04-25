@@ -43,6 +43,8 @@ body = '
 <p><%= day.get_log() %></p>
 <% } %>
 '
+
+
 day_body = ""
 day_body = '
 <a href="./index.html"><h1><%= @title %></h1></a>
@@ -68,3 +70,9 @@ footer = '
 <%= Time.now.strftime("%Y-%m-%d %H:%M:%S (%A)") %>
 </html>
 '
+
+
+
+
+
+
