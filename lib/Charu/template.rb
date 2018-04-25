@@ -43,6 +43,23 @@ body = '
 <p><%= day.get_log() %></p>
 <% } %>
 '
+day_body = ""
+day_body = '
+<a href="./index.html"><h1><%= @title %></h1></a>
+<br>
+<body>
+
+<% @days.each{|day| %>
+<h2><span class="title">
+<% link = "日記" %>
+<a href="./main/index/<%= link = day[:Datetime].strftime("%Y%m%d") %>.html"><%= day[:Title] %></a></span></h2>
+<div class="lm"><span class="lm">Last Update: <%= hiduke = day[:Datetime].strftime("%Y-%m-%d %H:%M:%S %A") %></span></div>
+<p><%= day[:Log] %></p>
+<% } %>
+
+</body>
+'
+
 
 footer = ""
 footer = '
