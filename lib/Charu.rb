@@ -9,7 +9,7 @@ require 'Charu/ChangeLogMemo'
 require 'Charu/Config'
 require 'Charu/Template'
 require 'Charu/CreateHtml'
-
+require 'Charu/FTP'
 
 
 module Charu
@@ -19,7 +19,7 @@ end
 
 
   changelogmemo = Charu::ChangeLogMemo.new()
-  changelogmemo.get_item_sort_reverse().each{|i|
+  changelogmemo.get_item_sort_reverse(1).each{|i|
     p i.datetime
     p i.get_item_title.encode(Encoding::SJIS)
     #p i.get_item_category()

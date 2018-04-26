@@ -212,8 +212,6 @@ module Charu
     def initialize()
       @config = Charu::Config.new()
 
-	  
-	  
       # ChangeLogMemoファイル
       File.open(@config.Change_Log_path, 'r:utf-8'){|f|
         @source = f.read  # 全て読み込む
@@ -235,13 +233,26 @@ module Charu
 =end
     end
 
-	def article_size(item_list, cnt)
-	i = [0,@conf.article_size - 1]
-	
-	
-	end
-	
-    def get_item_sort()
+    def article_size(item_list, cnt)
+      # [000-049] cnt 1 (1-1)*50 1*50-1
+      # [050-099] cnt 2 (2-1)*50 2*50-1
+      # [100-149] cnt 3 (3-1)*50 3*50-1
+
+      i = [0, 0]
+      i[0] = (cnt - 1) * @config.article_size
+      i[1] = (cnt * @config.article_size) - 1
+
+      s = i[0]
+      t = []
+      while item_list[s] != nil and s <= i[1] do
+        t << item_list[s]
+        s = s + 1
+      end
+
+      return t
+    end
+
+    def get_item_sort(cnt)
       i = []
       @change_log_private.entrys.each{|date|
         date.get_items().each{|item|
@@ -250,10 +261,11 @@ module Charu
           i.sort!{|a, b| a.datetime <=> b.datetime }
         }
       }
-      return i
+
+      return self.article_size(i, cnt)
     end
 
-    def get_item_sort_reverse()
+    def get_item_sort_reverse(cnt)
       i = []
       @change_log_private.entrys.each{|date|
         date.get_items().each{|item|
@@ -262,7 +274,7 @@ module Charu
           i.sort!{|a, b| b.datetime <=> a.datetime }
         }
       }
-      return i
+      return self.article_size(i, cnt)
     end
 
     def get_category_list()
@@ -270,7 +282,7 @@ module Charu
       @change_log_private.entrys.each{|date|
         date.get_items().each{|item|
           item.get_item_category().each{|category|
-          category_list << category
+            category_list << category
           }
         }
       }
