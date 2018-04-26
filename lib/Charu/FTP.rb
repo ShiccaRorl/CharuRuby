@@ -11,10 +11,12 @@ module Charu
       @port = @config.port
       @user = @config.user
       @pass = @config.pass
+      @dir = @config.www_html_out_path
 
+      @list = Dir.glob(@dir + '*.html')
     end
 
-    def put_file(dir, list)
+    def put_file()
       ftp = Net::FTP.new
       ftp.connect(@server, @port)
       ftp.login(@user, @pass)
@@ -24,11 +26,11 @@ module Charu
       puts ftp.pwd
 
       file_list = []
-      list.each{|file|
+      @list.each{|file|
         file_list << File::expand_path(file)
       }
-      ftp.chdir(dir)
-      p dir + ":移動ディレクトリ".encode(Encoding::SJIS)
+      ftp.chdir(@dir)
+      p @dir + ":移動ディレクトリ".encode(Encoding::SJIS)
       puts ftp.pwd
 
       # アップロード
