@@ -22,19 +22,23 @@ Or install it yourself as:
 
 ## Usage
 
-初期化
+###初期化
 ```
 ./CharuConfig/CharuConfig.rb
 ```
 設定してください。
 
-
-テンプレート
+###テンプレート
 ```
 ./CharuConfig/template/
 ```
 
-ChangeLogMemoとは？
+###実行
+```
+bundle exec Charu
+```
+
+###ChangeLogMemoとは？
 
 [横着プログラミング 第1回: Unixのメモ技術](http://0xcc.net/unimag/1/)
 
