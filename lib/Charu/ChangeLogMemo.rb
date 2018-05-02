@@ -219,6 +219,20 @@ module Charu
 
       @change_log_private = ChangeLogPrivate.new(@source)
 
+      @item_list = []
+      @change_log_private.entrys.each{|date|
+        date.get_items().each{|item|
+          @item_list << item
+        }
+      }
+
+      @all_category_list = []
+      @item_list.each{|item|
+        item.get_item_category().each{|category|
+          @all_category_list << category
+        }
+      }
+
 =begin
       @change_log_private.entrys.each{|date|
         date.get_items().each{|item|
@@ -231,6 +245,11 @@ module Charu
         }
       }
 =end
+    end
+
+    def article_size_max()
+
+      return @item.size()
     end
 
     def article_size(item_list, cnt)
@@ -253,41 +272,36 @@ module Charu
     end
 
     def get_item_sort(cnt)
-      i = []
-      @change_log_private.entrys.each{|date|
-        date.get_items().each{|item|
-          i << item
-
-          i.sort!{|a, b| a.datetime <=> b.datetime }
-        }
-      }
-
-      return self.article_size(i, cnt)
+      @item_list.sort!{|a, b| a.datetime <=> b.datetime }
+      return self.article_size(@item_list, cnt)
     end
 
     def get_item_sort_reverse(cnt)
-      i = []
-      @change_log_private.entrys.each{|date|
-        date.get_items().each{|item|
-          i << item
+      @item_list.sort!{|a, b| b.datetime <=> a.datetime }
+      return self.article_size(@item_list, cnt)
+    end
 
-          i.sort!{|a, b| b.datetime <=> a.datetime }
+    def get_category_cnt()
+      category_cnt = []
+
+      uniq_category_list = [] # 重複削除すみ
+      uniq_category_list = self.get_ctegory_list()
+
+      uniq_category_list.select{|uniq_category|
+        i = 0
+        @all_category_list.each{|all_category|
+          if uniq_category == all_category then
+            i = i + 1
+          end
         }
+        category_cnt << [uniq_category, i]
       }
-      return self.article_size(i, cnt)
+
+      return category_cnt
     end
 
     def get_category_list()
-      category_list = []
-      @change_log_private.entrys.each{|date|
-        date.get_items().each{|item|
-          item.get_item_category().each{|category|
-            category_list << category
-          }
-        }
-      }
-      category_list.uniq!
-      return category_list
+      return @all_category_list.uniq()
     end
   end
 end

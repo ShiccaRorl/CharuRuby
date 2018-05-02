@@ -2,11 +2,13 @@
 
 config = ""
 config = '
+# -*- encoding: utf-8 -*-
+
 module Charu
   class Config
     attr_accessor :home_title, :top_home_page, :home_category, :home_description, :css_theme_path, :Private_category
-	attr_accessor :Change_Log_path, :article_size, :www_html_out_path
-	attr_accessor :ftp_server, :ftp_port, :ftp_user, :ftp_pass
+	  attr_accessor :Change_Log_path, :article_size, :www_html_out_path
+	  attr_accessor :ftp_server, :ftp_port, :ftp_user, :ftp_pass
     def initialize()
       # ホームページタイトル
       @home_title = "TestPage"
