@@ -9,8 +9,13 @@ Gem::Specification.new do |spec|
   spec.authors       = ["ShiccaRorl"]
   spec.email         = ["shicca.rorl@gmail.com"]
 
-  spec.summary       = %q{ChangeLogMemo Html Converter Liblary}
-  spec.description   = %q{ChangeLogMemo Html Liblary}
+  spec.summary       = %q{ChangeLogMemo Html Converter}
+  spec.description   = %q{ChangeLogを日記にしているなら便利かも。
+  ChangeLogMemoとは？
+
+[横着プログラミング 第1回: Unixのメモ技術](http://0xcc.net/unimag/1/)
+
+[Change Log メモを試してみよう](http://at-aka.blogspot.jp/p/change-log.html)}
   spec.homepage      = "https://rubygems.org/gems/Charu"
   spec.license       = "MIT"
 
