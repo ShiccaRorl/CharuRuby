@@ -247,11 +247,13 @@ module Charu
 =end
     end
 
+    # アイテム数
     def article_size_max()
 
       return @item.size()
     end
 
+    # アイテム数を５０個とかで取り出せる
     def article_size(item_list, cnt)
       # [000-049] cnt 1 (1-1)*50 1*50-1
       # [050-099] cnt 2 (2-1)*50 2*50-1
@@ -271,35 +273,33 @@ module Charu
       return t
     end
 
+    # 並び替え
     def get_item_sort(cnt)
       @item_list.sort!{|a, b| a.datetime <=> b.datetime }
       return self.article_size(@item_list, cnt)
     end
 
+    # 逆順で並び替え
     def get_item_sort_reverse(cnt)
       @item_list.sort!{|a, b| b.datetime <=> a.datetime }
       return self.article_size(@item_list, cnt)
     end
 
+    # カテゴリーのカテゴリー数を配列で戻す
     def get_category_cnt()
       category_cnt = []
 
       uniq_category_list = [] # 重複削除すみ
-      uniq_category_list = self.get_ctegory_list()
+      uniq_category_list = get_category_list()
 
-      uniq_category_list.select{|uniq_category|
-        i = 0
-        @all_category_list.each{|all_category|
-          if uniq_category == all_category then
-            i = i + 1
-          end
-        }
-        category_cnt << [uniq_category, i]
+      uniq_category_list.each{|uniq_category|
+        category_cnt << [uniq_category, @all_category_list.count(uniq_category)]
       }
 
       return category_cnt
     end
 
+    # カテゴリーを取得する
     def get_category_list()
       return @all_category_list.uniq()
     end

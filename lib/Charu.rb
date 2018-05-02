@@ -24,5 +24,5 @@ end
     p i.get_item_title.encode(Encoding::SJIS)
     #p i.get_item_category()
   }
-  p changelogmemo.get_category_list()
+  #p changelogmemo.get_category_list()
   p changelogmemo.get_category_cnt()

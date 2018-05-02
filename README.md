@@ -36,8 +36,9 @@ Or install it yourself as:
 
 ChangeLogMemoとは？
 
-[ChangeLogMemo](http://0xcc.net/unimag/1/)
-[ChangeLogMemo](http://at-aka.blogspot.jp/p/change-log.html)
+[横着プログラミング 第1回: Unixのメモ技術](http://0xcc.net/unimag/1/)
+
+[Change Log メモを試してみよう](http://at-aka.blogspot.jp/p/change-log.html)
 
 
 ## Development
