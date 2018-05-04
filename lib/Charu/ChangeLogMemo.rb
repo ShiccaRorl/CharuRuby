@@ -1,23 +1,23 @@
 # -*- encoding: utf-8 -*-
 
 module Charu
-  class Cotegory
-    def initialize(title)
-      if title == nil then
-        title = ""
-      end
+  class Category
+    attr_accessor :category
+    def initialize()
       @category = []
-      title.scan(/\[(.*?)\]:/).each{|i|
-        self.add(i)
-      }
+      @config = Charu::Config.new()
+
+      # プライベートの設定
+      @private_category = true
     end
 
-    def add(category)
-      if category == nil then
-        category = []
+    def add(title_source)
+      if title_source == nil then
+        title_source = ""
       end
-      category.each{|i|
-        @category << i
+
+      title_source.scan(/\[(.*?)\]:/).each{|category|
+        @category << category[0]
       }
     end
 
@@ -25,23 +25,44 @@ module Charu
       @category.uniq! # 重複削除
       return @category
     end
+
+    def get_private_category()
+      # プライベートの設定
+      @category.each{|category|
+        @config.private_category.each{|private_category|
+          if category == private_category then
+            @private_category = false
+          end
+        }
+      }
+      return @private_category
+    end
   end
 
   class Item
-    attr_accessor :datetime, :item_title_source, :item_log, :cotegory
-    def initialize(time)
-      if time == nil then
+    attr_accessor :date, :item_title_source, :item_log, :category
+    def initialize(date)
+      if date == nil then
         p "アイテム初期化失敗"
-        time = Time.now
+        date = Time.now
         title = "アイテム初期化失敗"
       end
 
-      @datetime = time
+      @date = date
 
       @item_title_source = title
       @item_log = ""
 
       # カテゴリー
+      @item_private_list = []
+
+      @category = Charu::Category.new()
+
+    end
+
+    def set_item_title_source(item_title_source)
+      @item_title_source = item_title_source
+      @category.add(@item_title_source)
     end
 
     def get_item_title()
@@ -71,17 +92,22 @@ module Charu
       end
     end
 
+    # カテゴリーリスト
     def get_item_category()
-      @cotegory = Cotegory.new(@item_title_source)
-      if @cotegory == nil then
+      if @category == nil then
         return []
       end
-      return @cotegory.get_category_list()
+      return @category.get_category_list()
+    end
+
+    # プライベートのフラグを返す
+    def get_private_category()
+      return @category.get_private_category
     end
   end
 
   class Entry
-    attr_accessor :datetime, :item_title, :item_log, :cotegory
+    attr_accessor :date, :item_title, :item_log, :category, :item_source_day
     def initialize(item_source)
       @item_source_day = ""
       @item_source_contents = ""
@@ -94,18 +120,17 @@ module Charu
     end
 
     def get_items() # 解析する
-
       @items = []
       item = nil
       # 一行づつ処理する
       @item_source_contents.split("\n").each{|line|
         if item == nil then
-          item = Item.new(@item_source_day)
+          item = Charu::Item.new(@item_source_day)
         end
         if line.match(/^\*\s.*?/) != nil or line.match(/^\t\*\s.*?/) != nil then
-          item = Item.new(@item_source_day)
+          item = Charu::Item.new(@item_source_day)
           @items << item
-          item.item_title_source = line
+          item.set_item_title_source(line)
         else
           if line == nil then
             line = ""
@@ -145,7 +170,7 @@ module Charu
       return @items
     end
 
-    def get_entry_time()    #@entry_datetime = Time.mktime($1.to_i, $2.to_i, $3.to_i)
+    def get_entry_time()    #@entry_date = Time.mktime($1.to_i, $2.to_i, $3.to_i)
       t = Time.now
       begin
         t = Time.mktime(@item_source_day.split(/-/)[0].to_i, @item_source_day.split(/-/)[1].to_i, @item_source_day.split(/-/)[2].to_i)
@@ -175,7 +200,7 @@ module Charu
         i = i + 2
         s = s + 2
         if entry_data[1] != nil then
-          entry = Entry.new(entry_data)
+          entry = Charu::Entry.new(entry_data)
           @entrys << entry
         end
 
@@ -199,57 +224,63 @@ module Charu
       return category_list
     end
   end
+end
 
+# プライベートと分ける
+module Charu
   class ChangeLogPrivate < ChangeLog
+    def get_item_private()
+      @item_list_private = Hash.new()
 
+      @entrys.each{|entry|
+        entry.get_items().each{|item|
+          if item.get_private_category == true then
+            @item_list_private[entry.item_source_day] = item
+          end
+        }
+      }
+      return @item_list_private
+    end
   end
 
   class ChangeLogPublic < ChangeLog
-
+    def get_item_private()
+      @item_list_private = []
+      @entrys.entrys.each{|entry|
+        entry.get_items().each{|item|
+          @item_list_private << item
+        }
+      }
+      return @item_list_private
+    end
   end
+end
 
+module Charu
   class ChangeLogMemo
     def initialize()
       @config = Charu::Config.new()
 
       # ChangeLogMemoファイル
-      File.open(@config.Change_Log_path, 'r:utf-8'){|f|
+      File.open(@config.change_log_path, 'r:utf-8'){|f|
         @source = f.read  # 全て読み込む
       }
 
-      @change_log_private = ChangeLogPrivate.new(@source)
+      @change_log_private = Charu::ChangeLogPrivate.new(@source)
 
-      @item_list = []
-      @change_log_private.entrys.each{|date|
-        date.get_items().each{|item|
-          @item_list << item
-        }
-      }
+      @item_list = @change_log_private.get_item_private()
 
+      # 全てのカテゴリーを取得
       @all_category_list = []
-      @item_list.each{|item|
+      @item_list.each{|key, item|
         item.get_item_category().each{|category|
           @all_category_list << category
         }
       }
-
-=begin
-      @change_log_private.entrys.each{|date|
-        date.get_items().each{|item|
-          p "======="
-          p date.get_items().size
-          p item.datetime
-          p item.get_item_title().encode(Encoding::SJIS)
-          p item.get_item_log().encode(Encoding::SJIS)
-          #p item
-        }
-      }
-=end
     end
 
     # アイテム数
     def article_size_max()
-
       return @item.size()
     end
 
@@ -275,28 +306,26 @@ module Charu
 
     # 並び替え
     def get_item_sort(cnt)
-      @item_list.sort!{|a, b| a.datetime <=> b.datetime }
-      return self.article_size(@item_list, cnt)
+      return self.article_size(Hash[ @item_list.sort ], cnt)
     end
 
     # 逆順で並び替え
     def get_item_sort_reverse(cnt)
-      @item_list.sort!{|a, b| b.datetime <=> a.datetime }
-      return self.article_size(@item_list, cnt)
+      return self.article_size(Hash[ @item_list.sort.reverse ], cnt)
     end
 
-    # カテゴリーのカテゴリー数を配列で戻す
+    # カテゴリーのカテゴリー数をハッシュで戻す
     def get_category_cnt()
-      category_cnt = []
+      category_cnt = Hash.new()
 
       uniq_category_list = [] # 重複削除すみ
-      uniq_category_list = get_category_list()
+      uniq_category_list = self.get_category_list()
 
       uniq_category_list.each{|uniq_category|
-        category_cnt << [uniq_category, @all_category_list.count(uniq_category)]
+        category_cnt[uniq_category] = @all_category_list.count(uniq_category)
       }
 
-      return category_cnt
+      return Hash[ category_cnt.sort ]
     end
 
     # カテゴリーを取得する
