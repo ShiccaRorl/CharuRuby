@@ -11,18 +11,24 @@ require 'Charu/Template'
 require 'Charu/CreateHtml'
 require 'Charu/FTP'
 
-
 module Charu
   # Your code goes here...
 
 end
 
-
-  changelogmemo = Charu::ChangeLogMemo.new()
-  changelogmemo.get_item_sort_reverse(1).each{|i|
-    p i.datetime
-    p i.get_item_title.encode(Encoding::SJIS)
+changelogmemo = Charu::ChangeLogMemo.new()
+changelogmemo.get_item_sort_reverse(1).each{|key, items|
+  items.each{|item|
+    #p item.date
+    #p item.get_item_title.encode(Encoding::SJIS)
     #p i.get_item_category()
   }
-  #p changelogmemo.get_category_list()
-  p changelogmemo.get_category_cnt()
+}
+p changelogmemo.article_size_max()
+p changelogmemo.article_size_()
+#p changelogmemo.get_category_cnt()
+
+
+createhtml = Charu::CreateHtml.new()
+
+
