@@ -33,6 +33,23 @@ module Charu
 end
 
 module Charu
+  class PageCounter
+    def initiarize()
+      changelogmemo = Charu::ChangeLogMemo.new()
+      @max_page = changelogmemo.article_size_max()
+
+      i = 0
+      @file_name = []
+      for i in @max_page do
+        if i == 0 then
+          @file_name << [0, "index.html", changelogmemo.get_item_sort_reverse(i)]
+        end
+        @file_name << [i, "index" + i_s + ".html", changelogmemo.get_item_sort_reverse(i)]
+        i = i + 1
+      end
+    end
+  end
+
   class CreateHtml
     def initialize()
 
@@ -50,7 +67,6 @@ module Charu
 
       '
       @config = Charu::Config.new()
-
 
       #puts markdown.render(source)
       @header   = File.open("./CharuConfig/template/header.erb").read
