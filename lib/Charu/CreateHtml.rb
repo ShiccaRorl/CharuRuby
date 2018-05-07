@@ -34,25 +34,38 @@ end
 
 module Charu
   class PageCounter
-    def initiarize()
+    def initialize()
       changelogmemo = Charu::ChangeLogMemo.new()
       @max_page = changelogmemo.article_size_max()
+      p "Page MAX " + @max_page.to_s
 
       i = 0
-      @file_name = []
-      for i in @max_page do
+      @pages = []
+      while i <= @max_page do
         if i == 0 then
-          @file_name << [0, "index.html", changelogmemo.get_item_sort_reverse(i)]
+          @pages << [[i, "index.html", changelogmemo.get_item_sort_reverse(i)]]
+        else
+          @pages << [[i, "index" + i.to_s + ".html", changelogmemo.get_item_sort_reverse(i)]]
         end
-        @file_name << [i, "index" + i_s + ".html", changelogmemo.get_item_sort_reverse(i)]
+        p "Page " + i.to_s
         i = i + 1
       end
     end
+
+    def create_html()
+      p "pages.size " + @pages.size.to_s
+      @pages.each{|page|
+        create_html = Charu::CreateHtml.new(page)
+      }
+
+    end
+
   end
 
   class CreateHtml
-    def initialize()
-
+    attr_accessor :keyword, :css_theme_path, :link, :hiduke, :day, :title, :config
+    def initialize(page)
+      @config = Charu::Config.new()
       #markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
 
       source= '
@@ -66,43 +79,59 @@ module Charu
       このサイトは[mukaer.com](http://mukaer.com)です。
 
       '
-      @config = Charu::Config.new()
+      @page = page
 
       #puts markdown.render(source)
       @header   = File.open("./CharuConfig/template/header.erb").read
       @footer   = File.open("./CharuConfig/template/footer.erb").read
       @body     = File.open("./CharuConfig/template/body.erb").read
       @day_body = File.open("./CharuConfig/template/day_body.erb").read
+
+      self.keyword()
+      self.create_body()
     end
 
     def keyword()
-      @keywords = @db[:keyword].select(:Keyword).all
-
       @keyword = ""
-      @keywords.each{|i|
-        i.each{|key, value|
-          @keyword  = value + ", " + @keyword}
+      @config.home_category.each{|key|
+        @keyword = "#{@keyword}, " + "#{key}"
       }
-      @keyword.encode!("UTF-8")
+      return @keyword.encode!("UTF-8")
     end
 
     def create_body()
       # くっつける
+      p "==========="
 
       @htmls = []
-      @days.get_days().each{|day|
-        html = @header + @body + @footer
-        @htmls << [day.get_day_s(), day.get_tile(), html] # くっつける
-      }
+      @page.each{|page, file_name, changelogmemo|
+        #p page
+        #p file_name
+        @changelogmemo = changelogmemo
 
-      @htmls.each{|day_time, tile, body|
-        erb = ERB.new(body)
-        @htmls << [day_time, tile, erb.result(binding)] # ファイル名とｈｔｍｌの配列
+        @html = @header + @body + @footer
+        #p changelogmemo
+
+        erb = ERB.new(@html)
+=begin
+        changelogmemo.each{|key, items|
+          items.each{|item|
+            p item.date
+            p item.get_item_title#.encode(Encoding::SJIS)
+            p i.get_item_category()
+          }
+        }
+=end
+        html = erb.result(binding)
+        begin
+          File.write(@config.www_html_out_path + file_name, html)
+        rescue
+          p "書き込みエラー"
+        end
       }
-      file_save()
     end
 
-    def day_create_body()
+    def create_day_body()
       @days.sort_data().each{|day_s| # 文字列だけのデータ
         @daydata = []
         @days.get_days.each{|day|
@@ -119,7 +148,7 @@ module Charu
           html = erb.result(binding)
           # ファイル書き込み
           begin
-            File.write(@thml_path + "index/" + day_s + ".html", html)
+            File.write(@config.www_html_out_path + "index/" + day_s + ".html", html)
           rescue
             p day_s + ".html"
             p "ファイル書き込みエラー".encode(Encoding::SJIS)
@@ -131,7 +160,7 @@ module Charu
     def file_save()
       # ファイル書き込み
       @days.get_days.each{|day_name, title, ｈｔｍｌ|
-        File.write(@thml_path + @file_name, ｈｔｍｌ)
+        File.write(@config.www_html_out_path + @file_name, ｈｔｍｌ)
       }
     end
   end

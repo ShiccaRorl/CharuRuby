@@ -81,7 +81,7 @@ module Charu
         @item_log.rstrip! # 文字列最後の空白削除
         @item_log.strip!  # 先頭と末尾の空白文字を除去
 
-        return @item_log
+        return @item_log.gsub!(/(\r\n|\r\f\n|\r|\n)/, "</p>\n<p>")
       end
       return ""
     end
@@ -142,36 +142,7 @@ module Charu
           end
           item.app_item_log(line)
         end
-
       }
-
-      # 日付で分ける
-
-=begin
-        # 配列操作
-        #@item_contents.uniq!       # 重複削除
-        #item_contents.delete("*")  # "*" 削除
-        #item_contents.delete("\n")  # "\n" 削除
-        #@item_contents.delete([])  # [] 削除
-        #@item_contents.delete("")  # "" 削除
-
-        # 文字列操作
-        @item_contents.each{|item_source|
-          #p item_source.encode(Encoding::SJIS)
-
-          if item_source.size != 0 then
-            #p "===========item_source err==========="
-            #p item_source.encode(Encoding::SJIS)
-            #item_source.gsub!(/\n/, "")  # 文字列先頭の改行削除
-            item_source.chomp!  # 文字列最後の改行削除
-            item_source.rstrip! # 文字列最後の空白削除
-            item_source.strip!  # 先頭と末尾の空白文字を除去
-          else
-            p "文字列操作エラー".encode(Encoding::SJIS)
-          end
-        }
-=end
-
       return @items
     end
 

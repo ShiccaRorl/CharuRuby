@@ -1,19 +1,18 @@
 # -*- encoding: utf-8 -*-
 
 header = ""
-header = '
-<!doctype html>
+header = '<!doctype html>
 <html><head>
   <meta charset = "utf-8">
   <meta name="name" content="content">
   <meta http-equiv="Content-Style-Type" content="text/css">
   <meta http-equiv="Content-Script-Type" content="text/javascript">
-  <meta http-equiv="Last-Modified" content="<%= Time.now().strftime("%a, %d %b %Y %H:%M:%S") %> GMT">
+  <meta http-equiv="Last-Modified" content="<%= Time.now().strftime("%Y-%m-%d %H:%M:%S") %> GMT">
   <meta name="keywords" content="<%= @keyword %> ">
-  <meta name="description" content="<%= @description %>">
+  <meta name="description" content="<%= @config.home_description %>">
   	<link rel="stylesheet" href="theme/base.css" type="text/css" media="all">
-	<link rel="stylesheet" href="<%= @css_theme_path %>" title="<%= @home_title %>" type="text/css" media="all">
-  <title><%= @home_title %></title>
+	<link rel="stylesheet" href="<%= @config.css_theme_path %>" title="<%= @config.home_title %>" type="text/css" media="all">
+  <title><%= @config.home_title %></title>
 
     <style type="text/css">
 
@@ -22,25 +21,20 @@ header = '
 </head>
 
 <body>
-<a href="<%= @top_home_page %>"><h1><%= @home_title %></h1></a>
-<br>
+<a href="<%= @config.top_home_page %>"><h1><%= @config.home_title %></h1></a>
+<hr>
 '
 
 body = ""
 body = '
-<% i = 0 %>
-<% @daydata.each{|day| %>
-<% if i == 0 then %>
-<h1><%= day.get_Datetime().strftime("%Y年%m月%d日 (%A)") %></h1>
-<% i = 1 %>
-<% end %>
-<% } %>
+<% @changelogmemo.each{|key, items| %>
+  <% items.each{|item| %>
+    <h2><span class="title">
+    <%= item.get_item_title() %></h2>
+    <p style="text-align: right"><%= item.date.strftime("%Y年%m月%d日 (%A)") %></p>
 
-<% @daydata.each{|day| %>
-<h2><span class="title"><br>
-<%= day.get_tile() %></h2>
-
-<p><%= day.get_log() %></p>
+    <p><%= item.get_item_log() %></p>
+  <% } %>
 <% } %>
 '
 
@@ -66,8 +60,8 @@ day_body = '
 footer = ""
 footer = '
 </body>
-<br>
-<%= Time.now.strftime("%Y-%m-%d %H:%M:%S (%A)") %>
+<hr>
+<p style="text-align: center"><%= Time.now.strftime("%Y-%m-%d %H:%M:%S (%A)") %></p>
 </html>
 '
 

@@ -16,19 +16,19 @@ module Charu
 
 end
 
-changelogmemo = Charu::ChangeLogMemo.new()
-changelogmemo.get_item_sort_reverse(1).each{|key, items|
-  items.each{|item|
+#changelogmemo = Charu::ChangeLogMemo.new()
+#changelogmemo.get_item_sort_reverse(1).each{|key, items|
+  #items.each{|item|
     #p item.date
     #p item.get_item_title.encode(Encoding::SJIS)
     #p i.get_item_category()
-  }
-}
-p changelogmemo.article_size_max()
-p changelogmemo.article_size_()
+  #}
+#}
+#p changelogmemo.article_size_max()
+#p changelogmemo.article_size_()
 #p changelogmemo.get_category_cnt()
 
 
-createhtml = Charu::CreateHtml.new()
-
+createhtml = Charu::PageCounter.new()
+createhtml.create_html()
 
