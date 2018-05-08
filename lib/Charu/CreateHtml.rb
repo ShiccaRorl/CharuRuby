@@ -1,7 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-#require 'redcarpet'
-
 require "erb"
 
 module Charu
@@ -38,22 +36,9 @@ module Charu
     attr_accessor :keyword, :css_theme_path, :link, :hiduke, :day, :title, :config
     def initialize(page)
       @config = Charu::Config.new()
-      #markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
 
-      source= '
-
-      # 見出し1
-      ## 見出し2
-
-      * リスト1
-      * リスト2
-
-      このサイトは[mukaer.com](http://mukaer.com)です。
-
-      '
       @page = page
 
-      #puts markdown.render(source)
       @header   = File.open("./CharuConfig/template/header.erb").read
       @footer   = File.open("./CharuConfig/template/footer.erb").read
       @body     = File.open("./CharuConfig/template/body.erb").read
@@ -93,9 +78,11 @@ module Charu
           }
         }
 =end
-        html = erb.result(binding)
+        @html = erb.result(binding)
+
+
         begin
-          File.write(@config.www_html_out_path + file_name, html)
+          File.write(@config.www_html_out_path + file_name, @html)
         rescue
           p "書き込みエラー"
         end
