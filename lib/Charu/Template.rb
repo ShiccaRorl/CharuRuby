@@ -21,7 +21,7 @@ header = '<!doctype html>
 </head>
 
 <body>
-<a href="<%= @config.top_home_page %>"><h1><%= @config.home_title %></h1></a>
+<a href="<%= @config.top_home_page %>"><h1 style="text-align: center"><%= @config.home_title %></h1></a>
 <hr>
 '
 
