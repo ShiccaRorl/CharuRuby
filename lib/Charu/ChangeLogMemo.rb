@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 
+require 'redcarpet'
+
 module Charu
   class Category
     attr_accessor :category
@@ -92,7 +94,12 @@ module Charu
         @item_log.rstrip! # 文字列最後の空白削除
         @item_log.strip!  # 先頭と末尾の空白文字を除去
 
-        return @item_log.gsub!(/(\r\n|\r\f\n|\r|\n)/, "</p>\n<p>")
+        #@item_log.gsub!(/(\r\n|\r\f\n|\r|\n)/, "</p>\n<p>")
+
+        markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+        html = markdown.render(@item_log)
+
+        return html
       end
       return ""
     end
