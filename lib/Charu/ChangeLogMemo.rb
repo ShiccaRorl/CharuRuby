@@ -8,7 +8,8 @@ module Charu
       @config = Charu::Config.new()
 
       # プライベートの設定
-      @private_category = true
+      # 基本は全部プライベート
+      @private_category = false
     end
 
     def add(title_source)
@@ -27,6 +28,16 @@ module Charu
     end
 
     def get_private_category()
+      # プライベートの設定
+      # パブリックのカテゴリーに指定したものだけ、公開することにしてあります。
+      @category.each{|category|
+        @config.public_category.each{|public_category|
+          if category == public_category then
+            @private_category = true
+          end
+        }
+      }
+
       # プライベートの設定
       @category.each{|category|
         @config.private_category.each{|private_category|
@@ -191,12 +202,30 @@ module Charu
     def get_item_private()
       @item_list_private = Hash.new()
 
+      # プライベート集計
       @entrys.each{|entry|
+        necessary = []
+        day_s = ""
         entry.get_items().each{|item|
+          day_s = item.get_item_date_string()
           if item.get_private_category == true then
-            @item_list_private[item.get_item_date_string()] = [item]
+            necessary << item
           end
         }
+        @item_list_private[day_s] = necessary
+      }
+
+      # 配列の[]のを集計
+      delt = []
+      @item_list_private.each{|key, item|
+        if item == [] then
+          delt << key
+        end
+      }
+
+      # []を削除
+      delt.each{|del|
+        @item_list_private.delete(del)
       }
       return @item_list_private
     end
@@ -206,9 +235,13 @@ module Charu
     def get_item_private()
       @item_list_private = []
       @entrys.entrys.each{|entry|
+        i = []
+        s = ""
         entry.get_items().each{|item|
-          @item_list_private << item
+          s = item.get_item_date_string()
+          i << [item]
         }
+        @item_list_private[s] = i
       }
       return @item_list_private
     end
@@ -232,6 +265,8 @@ module Charu
       # 全てのカテゴリーを取得
       @all_category_list = []
       @item_list.each{|key, items|
+        #p "key " + key
+        #p items
         items.each{|item|
           item.get_item_category().each{|category|
             @all_category_list << category
@@ -249,7 +284,6 @@ module Charu
     def article_size_max()
       return @item_list.size() / @config.article_size
     end
-
 
     # アイテム数を５０個とかで取り出せる
     def article_size(item_list, cnt)
@@ -278,11 +312,8 @@ module Charu
       # 配列からハッシュに変換
       item_hash = Hash.new()
       t.each{|items|
-        items.each{|item|
-          item_hash[item.get_item_date_string()] = [item]
-        }
+        item_hash[items.first.get_item_date_string()] = items
       }
-
       return item_hash
     end
 

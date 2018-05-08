@@ -1,13 +1,12 @@
 # -*- encoding: utf-8 -*-
 
 config = ""
-config = '
-# -*- encoding: utf-8 -*-
+config = '# -*- encoding: utf-8 -*-
 
 module Charu
   class Config
     attr_accessor :home_title, :top_home_page, :home_category, :home_description, :css_theme_path, :private_category
-    attr_accessor :change_log_path, :article_size, :www_html_out_path, :www_html_out_path_private
+    attr_accessor :change_log_path, :article_size, :www_html_out_path, :www_html_out_path_private, :public_category
     attr_accessor :ftp_server, :ftp_port, :ftp_user, :ftp_pass
     def initialize()
       # ホームページタイトル
@@ -25,9 +24,12 @@ module Charu
       # CSS Path
       @css_theme_path = "./css/"
 
-      # プライベートカテゴリー
-      @private_category = ["Private", "P", "★", "2ch", "5ch"]
+	  # プライベートカテゴリー
+      @private_category = ["Private", "P", "★", "2ch", "5ch", "PS", "Life"]
 
+	  # パブリックカテゴリー
+      @public_category = ["Public"]
+	  
       # Change_Log_path
       @change_log_path = "./../ChangeLog"
 

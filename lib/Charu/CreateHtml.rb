@@ -5,34 +5,6 @@
 require "erb"
 
 module Charu
-  class Create_Day
-    def initialize()
-
-    end
-  end
-
-  class Create_Days
-    def initialize()
-      changelogmemo = Charu::ChangeLogMemo.new()
-    end
-  end
-end
-
-module Charu
-  class Create_Category
-    def initialize()
-
-    end
-  end
-
-  class Create_Categorys
-    def initialize()
-      changelogmemo = Charu::ChangeLogMemo.new()
-    end
-  end
-end
-
-module Charu
   class PageCounter
     def initialize()
       changelogmemo = Charu::ChangeLogMemo.new()
@@ -43,7 +15,7 @@ module Charu
       @pages = []
       while i <= @max_page do
         if i == 0 then
-          @pages << [[i, "index.html", changelogmemo.get_item_sort_reverse(i)]]
+          @pages << [[i, "index.html", changelogmemo.get_item_sort_reverse(1)]]
         else
           @pages << [[i, "index" + i.to_s + ".html", changelogmemo.get_item_sort_reverse(i)]]
         end
@@ -101,11 +73,10 @@ module Charu
 
     def create_body()
       # くっつける
-      p "==========="
 
       @htmls = []
       @page.each{|page, file_name, changelogmemo|
-        #p page
+        p "page " + page.to_s + " 作成中"
         #p file_name
         @changelogmemo = changelogmemo
 
