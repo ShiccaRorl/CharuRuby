@@ -44,6 +44,7 @@ bundle exec Charu
 
 [Change Log メモを試してみよう](http://at-aka.blogspot.jp/p/change-log.html)
 
+パブリックの[Public]:のカテゴリーが付いていないもの以外はHTML化しないです。
 
 ## Development
 

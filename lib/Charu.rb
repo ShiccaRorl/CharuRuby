@@ -1,34 +1,42 @@
 # -*- encoding: utf-8 -*-
 
-require "Charu/version"
-require 'bundler'
-
-Bundler.require
-
-require 'Charu/ChangeLogMemo'
+if "debug" == ARGV[0] then
 require 'Charu/Config'
-require 'Charu/Template'
-require 'Charu/CreateHtml'
-require 'Charu/FTP'
+  require 'Charu/ChangeLogMemo'
+  require 'Charu/CreateHtml'
+  require 'Charu/FTP'
+  require 'Charu/Debug'
 
-module Charu
-  # Your code goes here...
+  debug = Charu::Debug.new()
+
+  #debug.changelogmemo()
+  #debug.createhtml()
+  debug.ftp()
+
+else
+
+  require "Charu/version"
+  require 'bundler'
+
+  Bundler.require
+
+  require 'redcarpet'
+
+  require 'Charu/ChangeLogMemo'
+  require 'Charu/Config'
+  require 'Charu/Template'
+  require 'Charu/CreateHtml'
+  require 'Charu/FTP'
+
+  module Charu
+    # Your code goes here...
+
+  end
+
+  createhtml = Charu::PageCounter.new()
+  createhtml.create_html()
+
+  ftp_clariant = Charu::FtpClariant.new()
+  ftp_clariant.put_file()
 
 end
-
-#changelogmemo = Charu::ChangeLogMemo.new()
-#changelogmemo.get_item_sort_reverse(1).each{|key, items|
-  #items.each{|item|
-    #p item.date
-    #p item.get_item_title.encode(Encoding::SJIS)
-    #p i.get_item_category()
-  #}
-#}
-#p changelogmemo.article_size_max()
-#p changelogmemo.article_size_()
-#p changelogmemo.get_category_cnt()
-
-
-createhtml = Charu::PageCounter.new()
-createhtml.create_html()
-
