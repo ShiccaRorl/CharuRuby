@@ -13,7 +13,7 @@ module Charu
       @pass = @config.ftp_pass
       @dir = @config.www_html_out_path
 
-      @list = Dir.glob(@dir + '*')
+      @list = Dir.glob(@dir + './**/*')
       @file_list = []
       @dir_list = []
 
