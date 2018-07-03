@@ -8,6 +8,7 @@ module Charu
     attr_accessor :home_title, :top_home_page, :home_category, :home_description, :css_theme_path, :private_category
     attr_accessor :change_log_path, :article_size, :www_html_out_path, :www_html_out_path_private, :public_category
     attr_accessor :ftp_server, :ftp_port, :ftp_user, :ftp_pass
+	attr_accessor :wget_path
     def initialize()
       # ホームページタイトル
       @home_title = "TestPage"
@@ -48,6 +49,9 @@ module Charu
       @ftp_user = ""
       @ftp_pass = ""
 
+	  # Wgetのパス
+	  @wget_path = ""
+	  
     end
   end
 end

@@ -27,6 +27,7 @@ else
   require 'Charu/Template'
   require 'Charu/CreateHtml'
   require 'Charu/FTP'
+  #require 'Charu/Sitemap'
 
   module Charu
     # Your code goes here...
