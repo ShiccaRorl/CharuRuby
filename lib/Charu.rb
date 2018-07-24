@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 if "debug" == ARGV[0] then
-require 'Charu/Config'
+  require 'Charu/Config'
   require 'Charu/ChangeLogMemo'
   require 'Charu/CreateHtml'
   require 'Charu/FTP'
@@ -34,8 +34,8 @@ else
 
   end
 
-  createhtml = Charu::PageCounter.new()
-  createhtml.create_html()
+  page_counter = Charu::PageCounter.new()
+  page_counter.create_html()
 
   ftp_clariant = Charu::FtpClariant.new()
   ftp_clariant.put_file()
