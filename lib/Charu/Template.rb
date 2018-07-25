@@ -23,6 +23,13 @@ header = '<!doctype html>
               color: white;
               background-color: black;
              }
+         a:visited{
+              color: #FF0000;
+             }
+         #page_a:hover{
+              font-size: 20pt;
+              color: black;
+              }
     </style>
 
 </head>
@@ -35,12 +42,13 @@ header = '<!doctype html>
 body = ""
 body = '
 <center class="page">
-<a href="./index.html">1</a>
+<a href="./index.html" id="page_a">1</a>
 <% i = 1 %>
 <% while i < @page_max - 1 do %>
-<a href="./index<%= i + 1 %>.html"><%= i + 1 %></a>
+<a href="./index<%= i + 1 %>.html" id="page_a"><%= i + 1 %></a>
 <% i = i + 1 %>
 <% end %>
+<p>ページ</p>
 </center>
 
 <% @changelogmemo.each{|key, items| %>
@@ -60,6 +68,7 @@ body = '
 <a href="./index<%= i + 1 %>.html"><%= i + 1 %></a>
 <% i = i + 1 %>
 <% end %>
+<p>ページ</p>
 </center>
 '
 
@@ -78,6 +87,7 @@ day_body = '
 <a href="./index<%= i + 1 %>.html"><%= i + 1 %></a>
 <% i = i + 1 %>
 <% end %>
+<p>ページ</p>
 </center>
 
 <% @days.each{|day| %>
@@ -95,6 +105,7 @@ day_body = '
 <a href="./index<%= i + 1 %>.html"><%= i + 1 %></a>
 <% i = i + 1 %>
 <% end %>
+<p>ページ</p>
 </center>
 
 </body>
