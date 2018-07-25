@@ -15,7 +15,14 @@ header = '<!doctype html>
   <title><%= @config.home_title %></title>
 
     <style type="text/css">
-
+       .page{
+              font-size: 20pt;
+             }
+        code{
+              font-size: 15pt;
+              color: white;
+              background-color: black;
+             }
     </style>
 
 </head>
@@ -27,14 +34,13 @@ header = '<!doctype html>
 
 body = ""
 body = '
-<center><font size="5">
+<center class="page">
 <a href="./index.html">1</a>
 <% i = 1 %>
 <% while i < @page_max - 1 do %>
 <a href="./index<%= i + 1 %>.html"><%= i + 1 %></a>
 <% i = i + 1 %>
 <% end %>
-</font>
 </center>
 
 <% @changelogmemo.each{|key, items| %>
@@ -47,14 +53,13 @@ body = '
   <% } %>
 <% } %>
 
-<center><font size="5">
+<center class="page">
 <a href="./index.html">1</a>
 <% i = 1 %>
 <% while i < @page_max - 1 do %>
 <a href="./index<%= i + 1 %>.html"><%= i + 1 %></a>
 <% i = i + 1 %>
 <% end %>
-</font>
 </center>
 '
 
@@ -66,14 +71,13 @@ day_body = '
 <br>
 <body>
 
-<center><font size="5">
+<center class="page">
 <a href="./index.html">1</a>
 <% i = 1 %>
 <% while i < @page_max - 1 do %>
 <a href="./index<%= i + 1 %>.html"><%= i + 1 %></a>
 <% i = i + 1 %>
 <% end %>
-</font>
 </center>
 
 <% @days.each{|day| %>
@@ -84,14 +88,13 @@ day_body = '
 <p><%= day[:Log] %></p>
 <% } %>
 
-<center><font size="5">
+<center class="page">
 <a href="./index.html">1</a>
 <% i = 1 %>
 <% while i < @page_max - 1 do %>
 <a href="./index<%= i + 1 %>.html"><%= i + 1 %></a>
 <% i = i + 1 %>
 <% end %>
-</font>
 </center>
 
 </body>
