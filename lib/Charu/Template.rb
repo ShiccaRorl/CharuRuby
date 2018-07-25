@@ -27,6 +27,16 @@ header = '<!doctype html>
 
 body = ""
 body = '
+<center><font size="5">
+<a href="./index.html">1</a>
+<% i = 1 %>
+<% while i < @page_max - 1 do %>
+<a href="./index<%= i + 1 %>.html"><%= i + 1 %></a>
+<% i = i + 1 %>
+<% end %>
+</font>
+</center>
+
 <% @changelogmemo.each{|key, items| %>
   <% items.each{|item| %>
     <h2><span class="title">
@@ -36,14 +46,35 @@ body = '
     <p><%= item.get_item_log() %></p>
   <% } %>
 <% } %>
+
+<center><font size="5">
+<a href="./index.html">1</a>
+<% i = 1 %>
+<% while i < @page_max - 1 do %>
+<a href="./index<%= i + 1 %>.html"><%= i + 1 %></a>
+<% i = i + 1 %>
+<% end %>
+</font>
+</center>
 '
 
 
 day_body = ""
 day_body = '
+
 <a href="./index.html"><h1><%= @title %></h1></a>
 <br>
 <body>
+
+<center><font size="5">
+<a href="./index.html">1</a>
+<% i = 1 %>
+<% while i < @page_max - 1 do %>
+<a href="./index<%= i + 1 %>.html"><%= i + 1 %></a>
+<% i = i + 1 %>
+<% end %>
+</font>
+</center>
 
 <% @days.each{|day| %>
 <h2><span class="title">
@@ -52,6 +83,16 @@ day_body = '
 <div class="lm"><span class="lm">Last Update: <%= hiduke = day[:Datetime].strftime("%Y-%m-%d %H:%M:%S %A") %></span></div>
 <p><%= day[:Log] %></p>
 <% } %>
+
+<center><font size="5">
+<a href="./index.html">1</a>
+<% i = 1 %>
+<% while i < @page_max - 1 do %>
+<a href="./index<%= i + 1 %>.html"><%= i + 1 %></a>
+<% i = i + 1 %>
+<% end %>
+</font>
+</center>
 
 </body>
 '

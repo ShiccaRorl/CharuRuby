@@ -25,7 +25,7 @@ module Charu
     def create_html()
       p "pages.size " + @pages.size.to_s
       @pages.each{|page|
-        create_html = Charu::CreateHtml.new(page)
+        create_html = Charu::CreateHtml.new(page, @pages.size)
       }
 
     end
@@ -33,10 +33,11 @@ module Charu
   end
 
   class CreateHtml
-    attr_accessor :keyword, :css_theme_path, :link, :hiduke, :day, :title, :config
-    def initialize(page)
+    attr_accessor :keyword, :css_theme_path, :link, :hiduke, :day, :title, :config, :page, :page_max
+    def initialize(page, page_max)
       @config = Charu::Config.new()
 
+      @page_max = page_max
       @page = page
 
       @header   = File.open("./CharuConfig/template/header.erb").read
