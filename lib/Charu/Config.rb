@@ -49,13 +49,24 @@ module Charu
       @ftp_user = ""
       @ftp_pass = ""
 
-	  # Wgetのパス
-	  @wget_path = ""
+      # Wgetのパス
+      @wget_path = ""
 	  
     end
   end
 end
 
+'
+
+autoupload_lftp = ""
+autoupload_lftp = '
+<% require "./CharuConfig/CharuConfig" %>
+<% config = Charu::Config.new() %>
+
+open "<%= config.ftp_server %>" -p <%= config.ftp_port %> -u "<%= config.ftp_user %>","<%= config.ftp_pass %>"
+cd   "./"
+lcd  "<%= config.www_html_out_path %>"
+mirror -R
 '
 
 # ディレクトリの確認
@@ -71,4 +82,16 @@ if File.exist?("./CharuConfig/CharuConfig.rb") == false then
 else
   require './CharuConfig/CharuConfig'
 end
+
+
+#autoupload_lftp
+if File.exist?("./CharuConfig/autoupload.lftp") == false then
+  File.open("./CharuConfig/autoupload.lftp", "w:utf-8") do |f|
+    f.puts(autoupload_lftp)
+  end
+else
+
+end
+
+
 

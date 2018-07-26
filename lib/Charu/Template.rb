@@ -120,8 +120,6 @@ footer = '
 </html>
 '
 
-
-
 # ディレクトリの確認
 if Dir.exist?("./CharuConfig/template") == false then
 # ディレクトリの作成
@@ -163,3 +161,4 @@ if File.exist?("./CharuConfig/template/day_body.erb") == false then
 else
   @day_body = File.open("./CharuConfig/template/day_body.erb").read
 end
+

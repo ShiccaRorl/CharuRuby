@@ -22,25 +22,26 @@ module Charu
     def put_file()
       # 相対パスから絶対パスへ
       file_list = []
-      @list.each{|file|
-        file_list << File::expand_path(file) # 絶対パスを取得する
+      @list.each{|file| # 絶対パスを取得する
+        file_list << [File::expand_path(file) ,File.dirname(file)]
       }
 
       # ディレクトリかファイルか判断
-      file_list.each{|file|
+      file_list.each{|file, dir|
+        dir.sub!(@config.www_html_out_path, "")
         if FileTest.directory? file
           # ディレクトリのときの処理
           @dir_list << file
 
         elsif FileTest.file? file
           # ファイルのときの処理
-          @file_list << file
+          @file_list << [file, dir + "/"]
         else
           raise print('ファイルでもディレクトリでもない')
         end
       }
-      p @dir_list
-      p @file_list
+      #p @dir_list
+      #p @file_list
 
       ftp = Net::FTP.new
       ftp.connect(@server, @port)
@@ -55,10 +56,22 @@ module Charu
       #puts ftp.pwd
 
       # アップロード
-      @file_list.each{|file|
-        p file
-        ftp.put(file)
+      @file_list.each{|file, dir|
+        #print file + "\n"
+        #print dir + "\n"
+       
+
+
+        #ftp.put(file)
+        #print "\n"
       }
+
+
+command = "lftp -f ./CharuConfig/autoupload.lftp"
+system(command)
+
+
+
       print "完了\n"
       puts ftp.pwd
 

@@ -40,13 +40,15 @@ module Charu
       @page_max = page_max
       @page = page
 
-      @header   = File.open("./CharuConfig/template/header.erb").read
-      @footer   = File.open("./CharuConfig/template/footer.erb").read
-      @body     = File.open("./CharuConfig/template/body.erb").read
-      @day_body = File.open("./CharuConfig/template/day_body.erb").read
+      @header          = File.open("./CharuConfig/template/header.erb").read
+      @footer          = File.open("./CharuConfig/template/footer.erb").read
+      @body            = File.open("./CharuConfig/template/body.erb").read
+      @day_body        = File.open("./CharuConfig/template/day_body.erb").read
+      @autoupload_lftp = File.open("./CharuConfig/autoupload.lftp").read
 
       self.keyword()
       self.create_body()
+      self.lftp()
     end
 
     def keyword()
@@ -121,6 +123,17 @@ module Charu
       @days.get_days.each{|day_name, title, ｈｔｍｌ|
         File.write(@config.www_html_out_path + @file_name, ｈｔｍｌ)
       }
+    end
+
+    def lftp()
+        erb = ERB.new(@autoupload_lftp)
+        lftp = erb.result(binding)
+
+        begin
+          File.write("./CharuConfig/autoupload.lftp", lftp)
+        rescue
+          p "書き込みエラー"
+        end
     end
   end
 end
