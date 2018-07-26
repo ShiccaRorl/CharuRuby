@@ -15,11 +15,19 @@ header = '<!doctype html>
   <title><%= @config.home_title %></title>
 
     <style type="text/css">
+        .title{
+              font-size: 30pt;
+             }
+         .title_2:hover{
+             font-size: 40pt;
+             color: black;
+             }
        .page{
               font-size: 20pt;
+              clear: both;
              }
         code{
-              font-size: 15pt;
+              font-size: 20pt;
               color: white;
               background-color: black;
              }
@@ -27,15 +35,31 @@ header = '<!doctype html>
               color: #FF0000;
              }
          #page_a:hover{
-              font-size: 20pt;
+              font-size: 30pt;
               color: black;
+              }
+         .menu{
+              font-size: 25pt;
+              width: 25%;
+              float: left;
+              }
+         .reset{
+              clear: both;
+               }
+         .left1{
+              width: 20%;
+              float: left;
+              }
+         .left2{
+              width: 80%;
+              float: left;
               }
     </style>
 
 </head>
 
 <body>
-<a href="<%= @config.top_home_page %>"><h1 style="text-align: center"><%= @config.home_title %></h1></a>
+<a class= "title" href="<%= @config.top_home_page %>"><p class="title_2" style="text-align: center"><%= @config.home_title %></p></a>
 <hr>
 '
 
@@ -51,6 +75,23 @@ body = '
 <p>ページ</p>
 </center>
 
+
+<div class="left1"><p> </p></div>
+<div class="menu"><a href="./book/index.html">Book</a></div>
+<div class="menu"><a href="./freesoft/index.html">FreeSoft</a></div>
+<div class="menu"><a href="./download/index.html">Download</a></div>
+
+
+<div class="reset"></div>
+
+
+<div class="left1">
+    <p>ページ</p>
+</div>
+
+
+<div class="left2">
+
 <% @changelogmemo.each{|key, items| %>
   <% items.each{|item| %>
     <h2><span class="title">
@@ -60,6 +101,8 @@ body = '
     <p><%= item.get_item_log() %></p>
   <% } %>
 <% } %>
+
+</div>
 
 <center class="page">
 <a href="./index.html">1</a>

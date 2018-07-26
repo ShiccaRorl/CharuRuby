@@ -9,7 +9,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'Charu'
+gem Charu
 ```
 
 And then execute:
@@ -21,6 +21,11 @@ Or install it yourself as:
     $ gem install Charu
 
 ## Usage
+
+### 必要なプログラム
+```
+sudo apt-get install lftp
+```
 
 ### 初期化
 ```
@@ -45,6 +50,8 @@ bundle exec Charu
 [Change Log メモを試してみよう](http://at-aka.blogspot.jp/p/change-log.html)
 
 パブリックの[Public]:のカテゴリーが付いていないもの以外はHTML化しないです。
+
+FTPアップロードに「lftp」使っています。
 
 ## Development
 
