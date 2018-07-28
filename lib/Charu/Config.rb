@@ -5,32 +5,32 @@ config = '# -*- encoding: utf-8 -*-
 
 module Charu
   class Config
-    attr_accessor :home_title, :top_home_page, :home_category, :home_description, :css_theme_path, :private_category
+    attr_accessor :home_title, :top_home_page, :home_category, :css_theme_path, :private_category
     attr_accessor :change_log_path, :article_size, :www_html_out_path, :www_html_out_path_private, :public_category
     attr_accessor :ftp_server, :ftp_port, :ftp_user, :ftp_pass
-	attr_accessor :wget_path
+    attr_accessor :wget_path
     def initialize()
       # ホームページタイトル
       @home_title = "TestPage"
 
       # ホームページトップ
-      @top_home_page = "http://hoge.com/hoge/index.html"
+      @top_home_page = "http://hoge.com/hoge/"
 
       # ホームページカテゴリー
       @home_category = ["Ruby", "Python", "Java", "c++", "Ruby_on_Rails", "JavaSciript", "LIPS"]
 
       # ホームページのdescription
-      @home_description = "日々勉強中"
+      @home_description = ["日々勉強中", ""]
 
       # CSS Path
       @css_theme_path = "./css/"
 
-	  # プライベートカテゴリー
+      # プライベートカテゴリー
       @private_category = ["Private", "P", "★", "2ch", "5ch", "PS", "Life"]
 
-	  # パブリックカテゴリー
+      # パブリックカテゴリー
       @public_category = ["Public"]
-	  
+      
       # Change_Log_path
       @change_log_path = "./../ChangeLog"
 
@@ -51,7 +51,12 @@ module Charu
 
       # Wgetのパス
       @wget_path = ""
-	  
+      
+    end
+    
+    def home_description()
+        i = rand(@home_description.size)
+        return @home_description[i]
     end
   end
 end

@@ -9,7 +9,7 @@ header = '<!doctype html>
   <meta http-equiv="Content-Script-Type" content="text/javascript">
   <meta http-equiv="Last-Modified" content="<%= Time.now().strftime("%Y-%m-%d %H:%M:%S") %> GMT">
   <meta name="keywords" content="<%= @keyword %> ">
-  <meta name="description" content="<%= @config.home_description %>">
+  <meta name="description" content="<%= @config.home_description() %>">
   	<link rel="stylesheet" href="theme/base.css" type="text/css" media="all">
 	<link rel="stylesheet" href="<%= @config.css_theme_path %>" title="<%= @config.home_title %>" type="text/css" media="all">
   <title><%= @config.home_title %></title>
