@@ -67,8 +67,8 @@ module Charu
       }
 
 
-command = "lftp -f ./CharuConfig/autoupload.lftp"
-system(command)
+      command = "lftp -f ./CharuConfig/autoupload.lftp"
+      system(command)
 
 
 
