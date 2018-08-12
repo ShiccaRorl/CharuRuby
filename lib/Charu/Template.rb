@@ -18,11 +18,11 @@ header = '<!doctype html>
         .title{
               font-size: 30pt;
              }
-         .title_2:hover{
+        .title_2:hover{
              font-size: 40pt;
              color: black;
              }
-       .page{
+        .page{
               font-size: 20pt;
               clear: both;
              }
@@ -75,20 +75,16 @@ body = '
 <p>ページ</p>
 </center>
 
-
 <div class="left1"><p> </p></div>
 <div class="menu"><a href="./book/index.html">Book</a></div>
 <div class="menu"><a href="./freesoft/index.html">FreeSoft</a></div>
 <div class="menu"><a href="./download/index.html">Download</a></div>
 
-
 <div class="reset"></div>
-
 
 <div class="left1">
     <p>ページ</p>
 </div>
-
 
 <div class="left2">
 
@@ -114,7 +110,6 @@ body = '
 <p>ページ</p>
 </center>
 '
-
 
 day_body = ""
 day_body = '
@@ -154,7 +149,6 @@ day_body = '
 </body>
 '
 
-
 footer = ""
 footer = '
 </body>
@@ -165,13 +159,13 @@ footer = '
 
 # ディレクトリの確認
 if Dir.exist?("./CharuConfig/template") == false then
-# ディレクトリの作成
+  # ディレクトリの作成
   Dir.mkdir('CharuConfig/template')
 end
 
 # header
 if File.exist?("./CharuConfig/template/header.erb") == false then
-    File.open("./CharuConfig/template/header.erb", "w:utf-8") do |f|
+  File.open("./CharuConfig/template/header.erb", "w:utf-8") do |f|
     f.puts(header)
   end
 else
@@ -180,7 +174,7 @@ end
 
 # footer
 if File.exist?("./CharuConfig/template/footer.erb") == false then
-    File.open("./CharuConfig/template/footer.erb", "w:utf-8") do |f|
+  File.open("./CharuConfig/template/footer.erb", "w:utf-8") do |f|
     f.puts(footer)
   end
 else
@@ -189,7 +183,7 @@ end
 
 # body
 if File.exist?("./CharuConfig/template/body.erb") == false then
-    File.open("./CharuConfig/template/body.erb", "w:utf-8") do |f|
+  File.open("./CharuConfig/template/body.erb", "w:utf-8") do |f|
     f.puts(body)
   end
 else
@@ -198,7 +192,7 @@ end
 
 # day_body
 if File.exist?("./CharuConfig/template/day_body.erb") == false then
-    File.open("./CharuConfig/template/day_body.erb", "w:utf-8") do |f|
+  File.open("./CharuConfig/template/day_body.erb", "w:utf-8") do |f|
     f.puts(day_body)
   end
 else

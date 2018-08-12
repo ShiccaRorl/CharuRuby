@@ -4,8 +4,8 @@ require "erb"
 
 module Charu
   class PageCounter
-    def initialize()
-      changelogmemo = Charu::ChangeLogMemo.new()
+    def initialize(changelogmemo)
+      changelogmemo = changelogmemo
       @max_page = changelogmemo.article_size_max()
       p "Page MAX " + @max_page.to_s
 

@@ -6,7 +6,7 @@ config = '# -*- encoding: utf-8 -*-
 module Charu
   class Config
     attr_accessor :home_title, :top_home_page, :home_category, :css_theme_path, :private_category
-    attr_accessor :change_log_path, :article_size, :www_html_out_path, :www_html_out_path_private, :public_category
+    attr_accessor :change_log_path, :article_size, :www_html_out_path, :www_html_out_path_private, :public_category, :private_mode
     attr_accessor :ftp_server, :ftp_port, :ftp_user, :ftp_pass
     attr_accessor :wget_path
     def initialize()
@@ -17,7 +17,7 @@ module Charu
       @top_home_page = "http://hoge.com/hoge/"
 
       # ホームページカテゴリー
-      @home_category = ["Ruby", "Python", "Java", "c++", "Ruby_on_Rails", "JavaSciript", "LIPS"]
+      @home_category = ["Ruby", "Python", "Java", "c++", "Ruby on Rails", "JavaSciript", "LIPS"]
 
       # ホームページのdescription
       @home_description = ["日々勉強中", ""]
@@ -30,18 +30,21 @@ module Charu
 
       # パブリックカテゴリー
       @public_category = ["Public"]
-      
+
       # Change_Log_path
       @change_log_path = "./../ChangeLog"
 
       # 一度に表示する記事数
       @article_size = 50
 
-      # ｈｔｍｌの作成先
-      @www_html_out_path = "./www/"
+      # ｈｔｍｌの作成先 パブリック
+      @www_html_out_path = "./www/Public/"
 
       # ｈｔｍｌの作成先 プライベート
-      @www_html_out_path_private = "./Private/"
+      @www_html_out_path_private = "./www/Private/"
+
+      # プライベートを出力するか？true or false
+      @private_mode = true
 
       # FTPの設定
       @ftp_server = ""
@@ -51,9 +54,9 @@ module Charu
 
       # Wgetのパス
       @wget_path = ""
-      
+
     end
-    
+
     def home_description()
         i = rand(@home_description.size)
         return @home_description[i]
