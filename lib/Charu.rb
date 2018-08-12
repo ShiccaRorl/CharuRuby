@@ -36,6 +36,7 @@ else
 
   config = Charu::Config.new()
 
+  source = ""
   # ChangeLogMemoファイル
   File.open(config.change_log_path, 'r:utf-8'){|f|
     source = f.read  # 全て読み込む

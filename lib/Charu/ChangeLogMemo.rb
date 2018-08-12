@@ -240,15 +240,31 @@ module Charu
 
   class ChangeLogPrivate < ChangeLog
     def get_item()
-      @item_list_private = []
-      @entrys.entrys.each{|entry|
-        i = []
-        s = ""
+      @item_list_private = Hash.new()
+
+      @entrys.each{|entry|
+        necessary = []
+        day_s = ""
         entry.get_items().each{|item|
-          s = item.get_item_date_string()
-          i << [item]
+          day_s = item.get_item_date_string()
+          if item.get_private_category == true then
+            necessary << item
+          end
         }
-        @item_list_private[s] = i
+        @item_list_private[day_s] = necessary
+      }
+
+      # 配列の[]のを集計
+      delt = []
+      @item_list_private.each{|key, item|
+        if item == [] then
+          delt << key
+        end
+      }
+
+      # []を削除
+      delt.each{|del|
+        @item_list_private.delete(del)
       }
       return @item_list_private
     end
