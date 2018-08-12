@@ -97,8 +97,8 @@ module Charu
         markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
         html = markdown.render(@item_log)
 
-		html.gsub!(/(\r\n|\r\f\n|\r|\n)/, "</p>\n<p>")
-		
+        html.gsub!(/(\r\n|\r\f\n|\r|\n)/, "</p>\n<p>")
+
         return html
       end
       return ""
@@ -205,8 +205,8 @@ end
 
 # プライベートと分ける
 module Charu
-  class ChangeLogPrivate < ChangeLog
-    def get_item_private()
+  class ChangeLogPublic < ChangeLog
+    def get_item()
       @item_list_private = Hash.new()
 
       # プライベート集計
@@ -238,8 +238,8 @@ module Charu
     end
   end
 
-  class ChangeLogPublic < ChangeLog
-    def get_item_private()
+  class ChangeLogPrivate < ChangeLog
+    def get_item()
       @item_list_private = []
       @entrys.entrys.each{|entry|
         i = []
@@ -257,17 +257,10 @@ end
 
 module Charu
   class ChangeLogMemo
-    def initialize()
+    def initialize(item_list)
       @config = Charu::Config.new()
 
-      # ChangeLogMemoファイル
-      File.open(@config.change_log_path, 'r:utf-8'){|f|
-        @source = f.read  # 全て読み込む
-      }
-
-      @change_log_private = Charu::ChangeLogPrivate.new(@source)
-
-      @item_list = @change_log_private.get_item_private()
+      @item_list = item_list
 
       # 全てのカテゴリーを取得
       @all_category_list = []
@@ -346,6 +339,15 @@ module Charu
       }
 
       return Hash[ category_cnt.sort ]
+    end
+
+    # 日付を取得する
+    def get_day()
+      @item_list.each{|key, items|
+        p "key " + key
+        p items
+
+      }
     end
 
     # カテゴリーを取得する

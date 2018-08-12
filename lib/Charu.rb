@@ -34,10 +34,32 @@ else
 
   end
 
-  page_counter = Charu::PageCounter.new()
+  config = Charu::Config.new()
+
+  # ChangeLogMemoファイル
+  File.open(config.change_log_path, 'r:utf-8'){|f|
+    source = f.read  # 全て読み込む
+  }
+
+  change_log_public = Charu::ChangeLogPublic.new(source)
+
+  item_list_public = change_log_public.get_item()
+
+  changelogmemo = Charu::ChangeLogMemo.new(item_list_public)
+  page_counter = Charu::PageCounter.new(changelogmemo)
   page_counter.create_html()
 
   ftp_clariant = Charu::FtpClariant.new()
   ftp_clariant.put_file()
+
+  if config.private_mode == true then
+    change_log_private = Charu::ChangeLogPrivate.new(source)
+
+    item_list_private = change_log_private.get_item()
+
+    changelogmemo = Charu::ChangeLogMemo.new(item_list_private)
+    page_counter = Charu::PageCounter.new(changelogmemo)
+    page_counter.create_html()
+  end
 
 end
