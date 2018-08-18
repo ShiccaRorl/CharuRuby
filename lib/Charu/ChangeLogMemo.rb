@@ -247,9 +247,9 @@ module Charu
         day_s = ""
         entry.get_items().each{|item|
           day_s = item.get_item_date_string()
-          if item.get_private_category == true then
-            necessary << item
-          end
+
+          necessary << item
+
         }
         @item_list_private[day_s] = necessary
       }

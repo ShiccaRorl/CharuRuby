@@ -48,11 +48,12 @@ else
 
   changelogmemo = Charu::ChangeLogMemo.new(item_list_public)
   page_counter = Charu::PageCounter.new(changelogmemo)
-  page_counter.create_html()
+  page_counter.create_html(false)
 
   ftp_clariant = Charu::FtpClariant.new()
   ftp_clariant.put_file()
 
+  # プライベートモード作成
   if config.private_mode == true then
     change_log_private = Charu::ChangeLogPrivate.new(source)
 
@@ -60,7 +61,7 @@ else
 
     changelogmemo = Charu::ChangeLogMemo.new(item_list_private)
     page_counter = Charu::PageCounter.new(changelogmemo)
-    page_counter.create_html()
+    page_counter.create_html(config.private_mode)
   end
 
 end

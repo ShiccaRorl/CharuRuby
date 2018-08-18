@@ -18,10 +18,6 @@ header = '<!doctype html>
         .title{
               font-size: 30pt;
              }
-        .title_2:hover{
-             font-size: 40pt;
-             color: black;
-             }
         .page{
               font-size: 20pt;
               clear: both;
@@ -34,13 +30,13 @@ header = '<!doctype html>
          a:visited{
               color: #FF0000;
              }
-         #page_a:hover{
+         #page_a{
               font-size: 30pt;
               color: black;
               }
          .menu{
               font-size: 25pt;
-              width: 25%;
+              width: 20%;
               float: left;
               }
          .reset{
@@ -59,7 +55,7 @@ header = '<!doctype html>
 </head>
 
 <body>
-<a class= "title" href="<%= @config.top_home_page %>"><p class="title_2" style="text-align: center"><%= @config.home_title %></p></a>
+<a class= "title" href="<%= @config.top_home_page %>"><p style="text-align: center"><%= @config.home_title %></p></a>
 <hr>
 '
 
@@ -78,7 +74,8 @@ body = '
 <div class="left1"><p> </p></div>
 <div class="menu"><a href="./book/index.html">Book</a></div>
 <div class="menu"><a href="./freesoft/index.html">FreeSoft</a></div>
-<div class="menu"><a href="./download/index.html">Download</a></div>
+<div class="menu"><a href="./Software/index.html">Software</a></div>
+<div class="menu"><a href="./JW_CAD/index.html">JW_CAD</a></div>
 
 <div class="reset"></div>
 
@@ -198,4 +195,3 @@ if File.exist?("./CharuConfig/template/day_body.erb") == false then
 else
   @day_body = File.open("./CharuConfig/template/day_body.erb").read
 end
-
