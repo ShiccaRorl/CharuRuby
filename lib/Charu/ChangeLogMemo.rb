@@ -127,10 +127,14 @@ module Charu
       return @date.strftime("%Y-%m-%d")
     end
 
+    # 日付を取得する
+    def get_year()
+      return @date.strftime("%Y")
+    end
   end
 
   class Entry
-    attr_accessor :date, :item_title, :item_log, :category, :item_source_date
+    attr_accessor :item_title, :item_log, :category, :item_source_date
     def initialize(item_source)
       @item_source_date = ""
       @item_source_contents = ""
@@ -357,19 +361,20 @@ module Charu
       return Hash[ category_cnt.sort ]
     end
 
-    # 日付を取得する
-    def get_day()
-      @item_list.each{|key, items|
-        p "key " + key
-        p items
-
-      }
-    end
-
     # カテゴリーを取得する
     def get_category_list()
       return @all_category_list.uniq()
     end
+
+    # 日付を取得する
+    def get_year()
+      year = []
+      @item_list.each{|key, item|
+        year << item.date.strftime("%Y")
+      }
+      return year
+    end
+
   end
 end
 
