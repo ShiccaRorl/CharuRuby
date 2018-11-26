@@ -39,7 +39,7 @@ module Charu
   end
 
   class CreateHtml
-    attr_accessor :keyword, :css_theme_path, :link, :hiduke, :day, :title, :config, :page, :page_max
+    attr_accessor :keyword, :css_theme_path, :link, :hiduke, :day, :title, :config, :page, :page_max, :changelogmemo
     def initialize(page, page_max)
       @config = Charu::Config.new()
 
@@ -157,5 +157,8 @@ module Charu
         p "書き込みエラー"
       end
     end
+
+
+
   end
 end

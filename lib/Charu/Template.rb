@@ -80,7 +80,14 @@ body = '
 <div class="reset"></div>
 
 <div class="left1">
-    <p>ページ</p>
+
+<% @changelogmemo.each{|key, items| %>
+  <% items.each{|item| %>
+    <%= item.get_year() %>
+  <% } %>
+<% } %>
+
+
 </div>
 
 <div class="left2">
