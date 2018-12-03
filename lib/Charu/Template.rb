@@ -25,7 +25,7 @@ header = '<!doctype html>
         code{
               font-size: 20pt;
               color: white;
-              background-color: black;
+              background-color: #FFFFFF;
              }
          a:visited{
               color: #FF0000;

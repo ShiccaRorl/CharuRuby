@@ -93,9 +93,28 @@ module Charu
         @item_log.strip!  # 先頭と末尾の空白文字を除去
 
         #@item_log.gsub!(/(\r\n|\r\f\n|\r|\n)/, "</p>\n<p>")
+=begin
+        options = {
+          filter_html:     true,
+          hard_wrap:       true,
+          space_after_headers: true,
+        }
 
-        markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-        html = markdown.render(@item_log)
+        extensions = {
+          autolink:           true,
+          no_intra_emphasis:  true,
+          fenced_code_blocks: true,
+        }
+
+        #markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+
+        renderer = Redcarpet::Render::HTML.new(options)
+        markdown = Redcarpet::Markdown.new(renderer, extensions)
+
+        html = markdown.render(@item_log).html_safe
+=end
+
+        html = RDiscount.new(@item_log, :smart, :filter_html)
 
         html.gsub!(/(\r\n|\r\f\n|\r|\n)/, "</p>\n<p>")
 
@@ -377,4 +396,3 @@ module Charu
 
   end
 end
-

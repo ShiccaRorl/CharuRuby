@@ -20,7 +20,9 @@ else
 
   Bundler.require
 
-  require 'redcarpet'
+  #require 'redcarpet'
+
+  require 'rdiscount'
 
   require 'Charu/ChangeLogMemo'
   require 'Charu/Config'
