@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+﻿# -*- encoding: utf-8 -*-
 
 if "debug" == ARGV[0] then
   require 'Charu/Config'
