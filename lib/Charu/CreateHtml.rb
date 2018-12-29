@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+﻿# -*- encoding: utf-8 -*-
 
 require "erb"
 
@@ -43,7 +43,7 @@ module Charu
     def initialize(page, page_max)
       @config = Charu::Config.new()
 
-      @page_max = page_max
+      @page_max = page_max - 1
       @page = page
 
       @header          = File.open("./CharuConfig/template/header.erb").read

@@ -1,5 +1,5 @@
-# -*- encoding: utf-8 -*-
+﻿# -*- encoding: utf-8 -*-
 
 module Charu
-  VERSION = "0.0.14"
+  VERSION = "0.0.15"
 end
