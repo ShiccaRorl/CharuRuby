@@ -5,6 +5,6 @@ gemspec
 
 #gem 'redcarpet'
 
-gem 'rdiscount'
+#gem 'rdiscount'
 
 

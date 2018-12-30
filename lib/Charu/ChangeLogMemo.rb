@@ -93,6 +93,9 @@ module Charu
         @item_log.strip!  # 先頭と末尾の空白文字を除去
 
         #@item_log.gsub!(/(\r\n|\r\f\n|\r|\n)/, "</p>\n<p>")
+
+        html = @item_log
+
 =begin
         options = {
           filter_html:     true,
@@ -114,7 +117,7 @@ module Charu
         html = markdown.render(@item_log).html_safe
 =end
 
-        html = RDiscount.new(@item_log, :smart, :filter_html)
+        #html = RDiscount.new(@item_log, :smart, :filter_html)
 
         html.gsub!(/(\r\n|\r\f\n|\r|\n)/, "</p>\n<p>")
 
