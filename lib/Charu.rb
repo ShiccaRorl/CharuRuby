@@ -22,7 +22,7 @@ else
 
   #require 'redcarpet'
 
-  require 'rdiscount'
+  #require 'rdiscount'
 
   require 'Charu/ChangeLogMemo'
   require 'Charu/Config'
