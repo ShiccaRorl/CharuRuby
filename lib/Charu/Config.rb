@@ -20,7 +20,7 @@ module Charu
       @home_category = ["Ruby", "Python", "Java", "c++", "Ruby on Rails", "JavaSciript", "LIPS"]
 
       # ホームページのdescription
-      @home_description = ["日々勉強中", ""]
+      @home_description = ["", ""]
 
       # CSS Path
       @css_theme_path = "./css/"
