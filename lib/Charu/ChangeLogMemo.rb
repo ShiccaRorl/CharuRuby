@@ -145,13 +145,17 @@ module Charu
       return @category.get_private_category
     end
 
+    # 日付を取得する
     def get_item_date_string()
       return @date.strftime("%Y-%m-%d")
     end
 
-    # 日付を取得する
     def get_year()
       return @date.strftime("%Y")
+    end
+
+    def get_year_month()
+      return @date.strftime("%Y-%m")
     end
   end
 
@@ -298,23 +302,15 @@ module Charu
 end
 
 module Charu
+
+
+
   class ChangeLogMemo
     def initialize(item_list)
       @config = Charu::Config.new()
 
       @item_list = item_list
 
-      # 全てのカテゴリーを取得
-      @all_category_list = []
-      @item_list.each{|key, items|
-        #p "key " + key
-        #p items
-        items.each{|item|
-          item.get_item_category().each{|category|
-            @all_category_list << category
-          }
-        }
-      }
     end
 
     # アイテム数
@@ -386,15 +382,6 @@ module Charu
     # カテゴリーを取得する
     def get_category_list()
       return @all_category_list.uniq()
-    end
-
-    # 日付を取得する
-    def get_year()
-      year = []
-      @item_list.each{|key, item|
-        year << item.date.strftime("%Y")
-      }
-      return year
     end
 
   end

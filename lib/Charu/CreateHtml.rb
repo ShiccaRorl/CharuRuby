@@ -4,7 +4,8 @@ require "erb"
 
 module Charu
   class PageCounter
-    def initialize(changelogmemo)
+    def initialize(changelogmemo, entirey)
+      @entirey = entirey
       changelogmemo = changelogmemo
       @max_page = changelogmemo.article_size_max()
       p "Page MAX " + @max_page.to_s
@@ -26,7 +27,7 @@ module Charu
       p mode
       p "pages.size " + @pages.size.to_s
       @pages.each{|page|
-        create_html = Charu::CreateHtml.new(page, @pages.size)
+        create_html = Charu::CreateHtml.new(page, @pages.size, @entirey)
         if mode == true then
           create_html.create_body_private()
         elsif mode == false then
@@ -39,9 +40,11 @@ module Charu
   end
 
   class CreateHtml
-    attr_accessor :keyword, :css_theme_path, :link, :hiduke, :day, :title, :config, :page, :page_max, :changelogmemo
-    def initialize(page, page_max)
+    attr_accessor :keyword, :css_theme_path, :link, :hiduke, :day, :title, :config, :page, :page_max, :changelogmemo, :entirey
+    def initialize(page, page_max, entirey)
       @config = Charu::Config.new()
+
+      @entirey = entirey
 
       @page_max = page_max - 1
       @page = page

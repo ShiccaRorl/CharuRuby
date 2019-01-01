@@ -6,6 +6,7 @@ if "debug" == ARGV[0] then
   require 'Charu/CreateHtml'
   require 'Charu/FTP'
   require 'Charu/Debug'
+  require 'Charu/Calendar'
 
   debug = Charu::Debug.new()
 
@@ -30,6 +31,7 @@ else
   require 'Charu/CreateHtml'
   require 'Charu/FTP'
   #require 'Charu/Sitemap'
+  require 'Charu/Calendar'
 
   module Charu
     # Your code goes here...
@@ -49,7 +51,8 @@ else
   item_list_public = change_log_public.get_item()
 
   changelogmemo = Charu::ChangeLogMemo.new(item_list_public)
-  page_counter = Charu::PageCounter.new(changelogmemo)
+  calendar = Charu::ChangeLogMemo_Calendar.new(item_list_public) #カレンダー用
+  page_counter = Charu::PageCounter.new(changelogmemo, calendar)
   page_counter.create_html(false)
 
   ftp_clariant = Charu::FtpClariant.new()
@@ -61,8 +64,9 @@ else
 
     item_list_private = change_log_private.get_item()
 
-    changelogmemo = Charu::ChangeLogMemo.new(item_list_private)
-    page_counter = Charu::PageCounter.new(changelogmemo)
+    changelogmemo = Charu::ChangeLogMemo.new(item_list_public)
+    calendar = Charu::ChangeLogMemo_Calendar.new(item_list_public) #カレンダー用
+    page_counter = Charu::PageCounter.new(changelogmemo, calendar)
     page_counter.create_html(config.private_mode)
   end
 
