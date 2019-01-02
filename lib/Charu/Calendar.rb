@@ -27,7 +27,7 @@ module Charu
           @year << item.get_year()
         }
       }
-      @year.uniq!
+      @year.uniq!.sort!
 
       #カレンダーデータ作成
       @year_month = {}
@@ -43,6 +43,8 @@ module Charu
           end
         }
       }
+      @year_month.sort!
+
 
     end
   end

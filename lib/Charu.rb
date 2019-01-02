@@ -64,8 +64,8 @@ else
 
     item_list_private = change_log_private.get_item()
 
-    changelogmemo = Charu::ChangeLogMemo.new(item_list_public)
-    calendar = Charu::ChangeLogMemo_Calendar.new(item_list_public) #カレンダー用
+    changelogmemo = Charu::ChangeLogMemo.new(item_list_private)
+    calendar = Charu::ChangeLogMemo_Calendar.new(item_list_private) #カレンダー用
     page_counter = Charu::PageCounter.new(changelogmemo, calendar)
     page_counter.create_html(config.private_mode)
   end
