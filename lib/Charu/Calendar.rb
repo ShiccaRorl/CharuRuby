@@ -1,7 +1,7 @@
 ﻿# -*- encoding: utf-8 -*-
 
 module Charu
-  class ChangeLogMemo_Calendar
+  class ChangeLogMemo_Calendar < ChangeLogMemo
     attr_accessor :year, :all_category_list, :year_month
     def initialize(item_list)
       @config = Charu::Config.new()
@@ -45,17 +45,35 @@ module Charu
       }
       #@year_month.sort!
 
-
     end
+
+    def get_years()
+      data = []
+      @year_month.each{|key, item|
+        data << key
+      }
+      return data
+    end
+
+    def get_data()
+      return @year_month
+    end
+
+    def get_data_changelogmemo()
+      return Hash[@year_month]
+    end
+
   end
 
   class Year_Month
     def initialize()
-       @data = []
+      @data = []
     end
+
     def get_data()
       return @data
     end
+
     def add_data(data)
       @data << data
     end
