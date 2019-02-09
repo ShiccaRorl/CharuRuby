@@ -302,9 +302,6 @@ module Charu
 end
 
 module Charu
-
-
-
   class ChangeLogMemo
     def initialize(item_list)
       @config = Charu::Config.new()

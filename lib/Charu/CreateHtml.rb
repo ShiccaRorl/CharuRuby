@@ -4,8 +4,8 @@ require "erb"
 
 module Charu
   class PageCounter
-    def initialize(changelogmemo, entirey)
-      @entirey = entirey
+    def initialize(changelogmemo, calendar)
+      @calendar = calendar
       changelogmemo = changelogmemo
       @max_page = changelogmemo.article_size_max()
       p "Page MAX " + @max_page.to_s
@@ -27,9 +27,10 @@ module Charu
       p mode
       p "pages.size " + @pages.size.to_s
       @pages.each{|page|
-        create_html = Charu::CreateHtml.new(page, @pages.size, @entirey)
+        create_html = Charu::CreateHtml.new(page, @pages.size, @calendar)
         if mode == true then
           create_html.create_body_private()
+          create_html.create_calendar_private()
         elsif mode == false then
           create_html.create_body_public()
         end
@@ -40,11 +41,11 @@ module Charu
   end
 
   class CreateHtml
-    attr_accessor :keyword, :css_theme_path, :link, :hiduke, :day, :title, :config, :page, :page_max, :changelogmemo, :entirey
-    def initialize(page, page_max, entirey)
+    attr_accessor :keyword, :css_theme_path, :link, :hiduke, :day, :title, :config, :page, :page_max, :changelogmemo, :calendar
+    def initialize(page, page_max, calendar)
       @config = Charu::Config.new()
 
-      @entirey = entirey
+      @calendar = calendar
 
       @page_max = page_max - 1
       @page = page
@@ -69,10 +70,33 @@ module Charu
       return @keyword.encode!("UTF-8")
     end
 
+    def create_calendar_private()
+      @calendar.get_years().each{|year|
+
+        changelogmemo = @calendar.get_data_changelogmemo()
+p changelogmemo[0]
+        p "page " + year + " 作成中"
+        #p file_name
+        @changelogmemo = changelogmemo
+
+        @html = @header + @body + @footer
+        #p changelogmemo
+
+        erb = ERB.new(@html)
+
+        @html = erb.result(binding)
+
+        begin
+          File.write(@config.www_html_out_path_private + key + ".html", @html)
+        rescue
+          p "書き込みエラー"
+        end
+      }
+    end
+
     def create_body_private()
       # くっつける
 
-      @htmls = []
       @page.each{|page, file_name, changelogmemo|
         p "page " + page.to_s + " 作成中"
         #p file_name
@@ -96,7 +120,6 @@ module Charu
     def create_body_public()
       # くっつける
 
-      @htmls = []
       @page.each{|page, file_name, changelogmemo|
         p "page " + page.to_s + " 作成中"
         #p file_name
@@ -160,8 +183,6 @@ module Charu
         p "書き込みエラー"
       end
     end
-
-
 
   end
 end
