@@ -1,4 +1,4 @@
-﻿# -*- encoding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 
 require "erb"
 
@@ -24,15 +24,16 @@ module Charu
     end
 
     def create_html(mode)
-      p mode
-      p "pages.size " + @pages.size.to_s
+      print mode.to_s + "\n"
+      print "pages.size " + @pages.size.to_s + "\n"
       @pages.each{|page|
         create_html = Charu::CreateHtml.new(page, @pages.size, @calendar)
         if mode == true then
           create_html.create_body_private()
-          create_html.create_calendar_private()
+          #create_html.create_calendar_private()
         elsif mode == false then
           create_html.create_body_public()
+          #create_html.create_calendar_public()
         end
       }
 
@@ -50,11 +51,11 @@ module Charu
       @page_max = page_max - 1
       @page = page
 
-      @header          = File.open("./CharuConfig/template/header.erb").read
-      @footer          = File.open("./CharuConfig/template/footer.erb").read
-      @body            = File.open("./CharuConfig/template/body.erb").read
-      @day_body        = File.open("./CharuConfig/template/day_body.erb").read
-      @autoupload_lftp = File.open("./CharuConfig/autoupload.lftp").read
+      @header          = File.open("./CharuConfig/template/header.erb", 'r:utf-8').read
+      @footer          = File.open("./CharuConfig/template/footer.erb", 'r:utf-8').read
+      @body            = File.open("./CharuConfig/template/body.erb", 'r:utf-8').read
+      @day_body        = File.open("./CharuConfig/template/day_body.erb", 'r:utf-8').read
+      @autoupload_lftp = File.open("./CharuConfig/autoupload.lftp", 'r:utf-8').read
 
       self.keyword()
       #self.create_body_public()
@@ -70,14 +71,16 @@ module Charu
       return @keyword.encode!("UTF-8")
     end
 
+# エラー カレンダーの出力する
     def create_calendar_private()
       @calendar.get_years().each{|year|
 
-        changelogmemo = @calendar.get_data_changelogmemo()
-p changelogmemo[0]
-        p "page " + year + " 作成中"
+        @changelogmemo = @calendar.get_data_changelogmemo()
+        p "======"
+        #print changelogmemo[0].to_s + "\n"
+        print "page " + year + " 作成中\n"
         #p file_name
-        @changelogmemo = changelogmemo
+        #@changelogmemo = changelogmemo[year]
 
         @html = @header + @body + @footer
         #p changelogmemo
@@ -87,7 +90,7 @@ p changelogmemo[0]
         @html = erb.result(binding)
 
         begin
-          File.write(@config.www_html_out_path_private + key + ".html", @html)
+          File.write(@config.www_html_out_path_private + year + ".html", @html)
         rescue
           p "書き込みエラー"
         end
@@ -98,7 +101,7 @@ p changelogmemo[0]
       # くっつける
 
       @page.each{|page, file_name, changelogmemo|
-        p "page " + page.to_s + " 作成中"
+        print "page " + page.to_s + " 作成中\n"
         #p file_name
         @changelogmemo = changelogmemo
 
@@ -112,16 +115,21 @@ p changelogmemo[0]
         begin
           File.write(@config.www_html_out_path_private + file_name, @html)
         rescue
-          p "書き込みエラー"
+          print "書き込みエラー\n"
         end
       }
+    end
+
+# エラー カレンダーの出力する
+    def create_calendar_public()
+
     end
 
     def create_body_public()
       # くっつける
 
       @page.each{|page, file_name, changelogmemo|
-        p "page " + page.to_s + " 作成中"
+        print "page " + page.to_s + " 作成中\n"
         #p file_name
         @changelogmemo = changelogmemo
 
@@ -135,10 +143,13 @@ p changelogmemo[0]
         begin
           File.write(@config.www_html_out_path + file_name, @html)
         rescue
-          p "書き込みエラー"
+          print "書き込みエラー\n"
         end
       }
     end
+
+
+
 
     def create_day_body()
       @days.sort_data().each{|day_s| # 文字列だけのデータ
@@ -168,8 +179,8 @@ p changelogmemo[0]
 
     def file_save()
       # ファイル書き込み
-      @days.get_days.each{|day_name, title, ｈｔｍｌ|
-        File.write(@config.www_html_out_path + @file_name, ｈｔｍｌ)
+      @days.get_days.each{|day_name, title, html|
+        File.write(@config.www_html_out_path + @file_name, html)
       }
     end
 
@@ -180,7 +191,7 @@ p changelogmemo[0]
       begin
         File.write("./CharuConfig/autoupload.lftp", lftp)
       rescue
-        p "書き込みエラー"
+        print "書き込みエラー\n"
       end
     end
 

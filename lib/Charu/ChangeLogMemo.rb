@@ -27,6 +27,17 @@ module Charu
       return @category
     end
 
+    def get_public_category()
+      @category.each{|category|
+        @config.public_category.each{|public_category|
+          if category == public_category then
+            @public_category = true
+          end
+        }
+      }
+      return @public_category
+    end
+
     def get_private_category()
       # プライベートの設定
       # パブリックのカテゴリーに指定したものだけ、公開することにしてあります。
@@ -94,9 +105,6 @@ module Charu
 
         #@item_log.gsub!(/(\r\n|\r\f\n|\r|\n)/, "</p>\n<p>")
 
-        html = @item_log
-
-=begin
         options = {
           filter_html:     true,
           hard_wrap:       true,
@@ -109,13 +117,13 @@ module Charu
           fenced_code_blocks: true,
         }
 
-        #markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+        markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
 
         renderer = Redcarpet::Render::HTML.new(options)
         markdown = Redcarpet::Markdown.new(renderer, extensions)
 
-        html = markdown.render(@item_log).html_safe
-=end
+        html = markdown.render(@item_log)#.html_safe
+
 
         #html = RDiscount.new(@item_log, :smart, :filter_html)
 
@@ -138,6 +146,11 @@ module Charu
         return []
       end
       return @category.get_category_list()
+    end
+
+    # パブリックのフラグを返す
+    def get_public_category()
+      return @category.get_public_category
     end
 
     # プライベートのフラグを返す

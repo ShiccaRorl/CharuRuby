@@ -1,27 +1,12 @@
 ﻿# -*- encoding: utf-8 -*-
 
-if "debug" == ARGV[0] then
-  require 'Charu/Config'
-  require 'Charu/ChangeLogMemo'
-  require 'Charu/CreateHtml'
-  require 'Charu/FTP'
-  require 'Charu/Debug'
-  require 'Charu/Calendar'
-
-  debug = Charu::Debug.new()
-
-  #debug.changelogmemo()
-  #debug.createhtml()
-  debug.ftp()
-
-else
 
   require "Charu/version"
   require 'bundler'
 
   Bundler.require
 
-  #require 'redcarpet'
+  require 'redcarpet'
 
   #require 'rdiscount'
 
@@ -55,8 +40,7 @@ else
   page_counter = Charu::PageCounter.new(changelogmemo, calendar)
   page_counter.create_html(false)
 
-  ftp_clariant = Charu::FtpClariant.new()
-  ftp_clariant.put_file()
+
 
   # プライベートモード作成
   if config.private_mode == true then
@@ -70,4 +54,6 @@ else
     page_counter.create_html(config.private_mode)
   end
 
-end
+
+  ftp_clariant = Charu::FtpClariant.new()
+  ftp_clariant.put_file()

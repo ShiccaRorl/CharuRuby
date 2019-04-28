@@ -3,7 +3,7 @@
 # Specify your gem's dependencies in Charu.gemspec
 gemspec
 
-#gem 'redcarpet'
+gem 'redcarpet'
 
 #gem 'rdiscount'
 

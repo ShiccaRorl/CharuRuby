@@ -1,4 +1,4 @@
-﻿# -*- encoding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 
 module Charu
   class ChangeLogMemo_Calendar < ChangeLogMemo
@@ -60,12 +60,12 @@ module Charu
     end
 
     def get_data_changelogmemo()
-      return Hash[@year_month]
+      return @year_month
     end
 
   end
 
-  class Year_Month
+  class Year_Month < Item
     def initialize()
       @data = []
     end

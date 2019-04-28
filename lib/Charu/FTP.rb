@@ -20,6 +20,7 @@ module Charu
     end
 
     def put_file()
+=begin
       # 相対パスから絶対パスへ
       file_list = []
       @list.each{|file| # 絶対パスを取得する
@@ -65,17 +66,16 @@ module Charu
         #ftp.put(file)
         #print "\n"
       }
-
-
-      command = "lftp -f ./CharuConfig/autoupload.lftp"
-      system(command)
-
-
-
-      print "完了\n"
       puts ftp.pwd
 
       ftp.quit
-    end
+=end
+command = "lftp -f ./CharuConfig/autoupload.lftp"
+system(command)
+
+
+
+print "完了\n"
+end
   end
 end
